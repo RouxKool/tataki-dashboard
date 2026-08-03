@@ -147,8 +147,11 @@ node --env-file=.env scripts/backfill.js 2025-01-06
 - `scripts/backfill.js` — calcule tout l'historique depuis une date de départ, reprend
   automatiquement en cas d'interruption
 - `scripts/record-follower-snapshot.js` — enregistre l'instantané abonnés de la semaine en cours
+- `scripts/repair-insights.js` — recalcule uniquement l'engagement des posts qui l'ont manqué
+  (sans refaire l'appel bien plus coûteux aux commentaires)
 - `.github/workflows/update-weekly.yml` — mise à jour automatique chaque lundi
 - `.github/workflows/backfill.yml` — rattrapage manuel de l'historique
+- `.github/workflows/repair-insights.yml` — réparation manuelle de l'engagement manquant
 
 ## Limites connues
 

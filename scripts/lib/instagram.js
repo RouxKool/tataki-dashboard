@@ -85,29 +85,34 @@ export async function fetchTopLevelComments({ accessToken, postId }) {
 /**
  * Engagement (total_interactions = likes + commentaires + partages +
  * enregistrements, métrique officielle Instagram) et vues (Reels
- * uniquement). Nécessite la permission instagram_manage_insights sur le
- * token ; si elle manque ou que la métrique n'est pas disponible pour ce
- * post, la valeur reste à `null` sans faire échouer le reste du calcul
- * (même logique que le "reach" dans insta-recherche).
+ * uniquement). Chaque métrique est demandée séparément : si une seule
+ * métrique n'est pas valide pour ce type de post (ex: "shares" refusé sur
+ * une photo simple), la Graph API rejette parfois toute la requête
+ * groupée — en séparant les appels, une métrique en échec ne fait pas
+ * disparaître les autres. Nécessite la permission
+ * instagram_manage_insights sur le token ; si elle manque, tout reste à
+ * `null` sans faire échouer le reste du calcul (même logique que le
+ * "reach" dans insta-recherche).
  */
 export async function fetchPostInsights({ accessToken, postId, isReel }) {
-  const metrics = isReel ? "total_interactions,shares,plays" : "total_interactions,shares";
+  const totalInteractions = await fetchSingleInsightMetric({ accessToken, postId, metric: "total_interactions" });
+  const shares = await fetchSingleInsightMetric({ accessToken, postId, metric: "shares" });
+  const plays = isReel ? await fetchSingleInsightMetric({ accessToken, postId, metric: "plays" }) : null;
+
+  return { totalInteractions, shares, plays };
+}
+
+async function fetchSingleInsightMetric({ accessToken, postId, metric }) {
   const url = new URL(`https://graph.facebook.com/${GRAPH_API_VERSION}/${postId}/insights`);
-  url.searchParams.set("metric", metrics);
+  url.searchParams.set("metric", metric);
   url.searchParams.set("access_token", accessToken);
 
   try {
     const body = await graphFetch(url);
-    const values = Object.fromEntries(
-      (body.data ?? []).map((entry) => [entry.name, entry.values?.[0]?.value ?? null])
-    );
-    return {
-      totalInteractions: values.total_interactions ?? null,
-      shares: values.shares ?? null,
-      plays: isReel ? values.plays ?? null : null,
-    };
-  } catch {
-    return { totalInteractions: null, shares: null, plays: null };
+    return body.data?.[0]?.values?.[0]?.value ?? null;
+  } catch (error) {
+    console.log(`Insight "${metric}" indisponible pour le post ${postId} : ${error.message}`);
+    return null;
   }
 }
 

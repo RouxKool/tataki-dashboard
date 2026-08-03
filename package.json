@@ -1,0 +1,12 @@
+{
+  "name": "tataki-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Dashboard de suivi hebdomadaire du compte Instagram Tataki (taux de réponse, engagement, abonnés)",
+  "scripts": {
+    "record-followers": "node scripts/record-follower-snapshot.js",
+    "compute-week": "node scripts/compute-week.js",
+    "backfill": "node scripts/backfill.js"
+  }
+}

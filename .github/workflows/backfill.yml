@@ -1,0 +1,47 @@
+name: Rattrapage de l'historique
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: "Premier lundi à partir duquel calculer (YYYY-MM-DD)"
+        required: false
+        default: "2025-01-06"
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Calculer l'historique (peut prendre longtemps sur un gros historique)
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+        run: node scripts/backfill.js "${{ inputs.start_date }}"
+
+      # if: always() — même si le calcul échoue en cours de route (ex: limite de
+      # l'API atteinte), on sauvegarde ce qui a déjà été calculé. Il suffira de
+      # relancer ce workflow plus tard pour reprendre là où ça s'est arrêté.
+      - name: Commit et push si les données ont changé
+        if: always()
+        run: |
+          if git diff --quiet -- data/; then
+            echo "Aucun changement, rien à committer."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "chore: rattrapage de l'historique [skip ci]"
+          git push

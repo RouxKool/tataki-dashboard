@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tataki — Dashboard Instagram</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <h1>Dashboard Instagram — Tataki</h1>
+    <p class="subtitle">Suivi du taux de réponse de l'équipe à la communauté, semaine par semaine.</p>
+
+    <section class="controls">
+      <div class="mode-toggle">
+        <button type="button" id="mode-week" class="mode-btn active">Semaine</button>
+        <button type="button" id="mode-month" class="mode-btn">Mois</button>
+      </div>
+      <div class="timeline">
+        <button type="button" id="prev-btn" class="nav-btn" aria-label="Période précédente">‹</button>
+        <div class="timeline-slider-wrap">
+          <input type="range" id="timeline" min="0" max="0" value="0" step="1" />
+          <div id="period-label" class="period-label">—</div>
+        </div>
+        <button type="button" id="next-btn" class="nav-btn" aria-label="Période suivante">›</button>
+      </div>
+    </section>
+
+    <section class="tiles" id="tiles">
+      <div class="tile">
+        <div class="tile-value" id="tile-reply-rate">—</div>
+        <div class="tile-label">Taux de réponse</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value" id="tile-answered">—</div>
+        <div class="tile-label">Commentaires répondus</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value" id="tile-posts">—</div>
+        <div class="tile-label">Posts publiés</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value" id="tile-followers">—</div>
+        <div class="tile-label">Abonnés</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value" id="tile-views">—</div>
+        <div class="tile-label">Vues (Reels)</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value" id="tile-engagement-total">—</div>
+        <div class="tile-label">Engagement total</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value" id="tile-engagement-avg">—</div>
+        <div class="tile-label">Engagement moyen / post</div>
+      </div>
+      <div class="tile">
+        <div class="tile-value" id="tile-engagement-median">—</div>
+        <div class="tile-label">Engagement médian / post</div>
+      </div>
+    </section>
+    <p class="tile-note">Engagement = likes + commentaires + partages + enregistrements (total_interactions Instagram).</p>
+
+    <section class="chart-section">
+      <h2>Évolution du taux de réponse</h2>
+      <div id="chart" class="chart"></div>
+    </section>
+
+    <section class="table-section">
+      <h2>Détail par post</h2>
+      <div class="table-scroll">
+        <table id="posts-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Aperçu</th>
+              <th>Likes</th>
+              <th>Commentaires</th>
+              <th>Répondus</th>
+              <th>Taux</th>
+              <th>Partages</th>
+              <th>Vues</th>
+            </tr>
+          </thead>
+          <tbody id="posts-tbody"></tbody>
+        </table>
+      </div>
+      <p id="empty-message" class="empty-message" hidden>Aucun post sur cette période.</p>
+      <button type="button" id="show-more-btn" class="show-more-btn" hidden>Afficher plus</button>
+    </section>
+
+    <p id="loading-status" class="loading-status">Chargement des données...</p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

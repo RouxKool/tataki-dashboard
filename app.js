@@ -12,8 +12,10 @@ const TABLE_PAGE_SIZE = 5;
 let weeklyPeriods = [];
 let monthlyPeriods = [];
 let mode = "week";
-let sortedPostsForTable = [];
+let currentPeriodPosts = [];
 let visibleRowCount = TABLE_PAGE_SIZE;
+let sortKey = "date";
+let sortDirection = "desc";
 
 init();
 
@@ -45,8 +47,17 @@ timeline.addEventListener("input", () => renderSelectedPeriod());
 prevBtn.addEventListener("click", () => moveTimeline(-1));
 nextBtn.addEventListener("click", () => moveTimeline(1));
 showMoreBtn.addEventListener("click", () => {
-  visibleRowCount = sortedPostsForTable.length;
+  visibleRowCount = currentPeriodPosts.length;
   renderPostsTableRows();
+});
+
+document.querySelectorAll("th[data-sort-key]").forEach((th) => {
+  th.addEventListener("click", () => {
+    const key = th.dataset.sortKey;
+    sortDirection = sortKey === key && sortDirection === "desc" ? "asc" : "desc";
+    sortKey = key;
+    renderPostsTableRows();
+  });
 });
 
 function setMode(newMode, { resetToLatest } = {}) {
@@ -79,6 +90,12 @@ function renderSelectedPeriod() {
 
   const previous = periods[index - 1] ?? null;
   periodLabel.textContent = period.label;
+  prevBtn.disabled = index <= 0;
+  nextBtn.disabled = index >= periods.length - 1;
+
+  const deltaEl = document.getElementById("tile-reply-rate-delta");
+  deltaEl.textContent = formatReplyRateDelta(period.replyRate, previous?.replyRate);
+  deltaEl.className = "hero-metric-delta " + replyRateDeltaDirection(period.replyRate, previous?.replyRate);
 
   document.getElementById("tile-reply-rate").textContent = formatPercent(period.replyRate);
   document.getElementById("tile-answered").textContent = `${period.commentsAnswered} / ${period.commentsTotal}`;
@@ -89,7 +106,7 @@ function renderSelectedPeriod() {
   document.getElementById("tile-engagement-avg").textContent = formatNumber(period.engagementAvg);
   document.getElementById("tile-engagement-median").textContent = formatNumber(period.engagementMedian);
 
-  sortedPostsForTable = [...period.posts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  currentPeriodPosts = period.posts;
   visibleRowCount = TABLE_PAGE_SIZE;
   renderPostsTableRows();
 }
@@ -98,15 +115,17 @@ function renderPostsTableRows() {
   const tbody = document.getElementById("posts-tbody");
   const emptyMessage = document.getElementById("empty-message");
   tbody.innerHTML = "";
+  updateSortHeaders();
 
-  if (!sortedPostsForTable.length) {
+  if (!currentPeriodPosts.length) {
     emptyMessage.hidden = false;
     showMoreBtn.hidden = true;
     return;
   }
   emptyMessage.hidden = true;
 
-  for (const post of sortedPostsForTable.slice(0, visibleRowCount)) {
+  const sorted = getSortedPosts(currentPeriodPosts);
+  for (const post of sorted.slice(0, visibleRowCount)) {
     const tr = document.createElement("tr");
     const rate = post.commentsTotal > 0 ? post.commentsAnswered / post.commentsTotal : null;
     tr.innerHTML = `
@@ -123,12 +142,63 @@ function renderPostsTableRows() {
     tbody.appendChild(tr);
   }
 
-  showMoreBtn.hidden = visibleRowCount >= sortedPostsForTable.length;
+  showMoreBtn.hidden = visibleRowCount >= sorted.length;
+}
+
+function getSortedPosts(posts) {
+  return [...posts].sort((a, b) => {
+    const va = sortValueFor(a, sortKey);
+    const vb = sortValueFor(b, sortKey);
+    const cmp = typeof va === "string" ? va.localeCompare(vb, "fr") : va - vb;
+    return sortDirection === "asc" ? cmp : -cmp;
+  });
+}
+
+function sortValueFor(post, key) {
+  const rate = post.commentsTotal > 0 ? post.commentsAnswered / post.commentsTotal : -1;
+  switch (key) {
+    case "date":
+      return new Date(post.timestamp).getTime();
+    case "type":
+      return mediaTypeLabel(post);
+    case "caption":
+      return post.captionPreview ?? "";
+    case "likes":
+      return post.likeCount ?? 0;
+    case "comments":
+      return post.commentsTotal ?? 0;
+    case "answered":
+      return post.commentsAnswered ?? 0;
+    case "rate":
+      return rate;
+    case "shares":
+      return post.shares ?? -1;
+    case "views":
+      return post.plays ?? -1;
+    default:
+      return 0;
+  }
+}
+
+function updateSortHeaders() {
+  document.querySelectorAll("th[data-sort-key]").forEach((th) => {
+    const isActive = th.dataset.sortKey === sortKey;
+    th.classList.toggle("sorted", isActive);
+    const arrow = th.querySelector(".sort-arrow");
+    if (arrow) arrow.remove();
+    if (isActive) {
+      const span = document.createElement("span");
+      span.className = "sort-arrow";
+      span.textContent = sortDirection === "asc" ? "▲" : "▼";
+      th.appendChild(span);
+    }
+  });
 }
 
 function weekToPeriod(week) {
   return {
     label: `Semaine du ${formatDate(week.weekStart)} au ${formatDate(week.weekEnd)}`,
+    dateLabel: formatDate(week.weekStart),
     followerCount: week.followerCount,
     posts: week.posts,
     ...aggregatePosts(week.posts),
@@ -189,10 +259,37 @@ function median(values) {
 
 function renderChart(periods) {
   const points = periods
-    .map((p, i) => ({ x: i, y: p.replyRate }))
+    .map((p, i) => ({ x: i, y: p.replyRate, dateLabel: p.dateLabel }))
     .filter((p) => p.y != null);
 
-  document.getElementById("chart").innerHTML = points.length >= 2 ? buildLineChartSvg(points, periods.length) : "<p class=\"empty-message\">Pas assez de données pour un graphique.</p>";
+  const chartEl = document.getElementById("chart");
+  if (points.length < 2) {
+    chartEl.innerHTML = "<p class=\"empty-message\">Pas assez de données pour un graphique.</p>";
+    return;
+  }
+  chartEl.innerHTML = buildLineChartSvg(points, periods.length);
+  attachChartTooltip(points);
+}
+
+function attachChartTooltip(points) {
+  const tooltip = document.getElementById("chart-tooltip");
+  const container = document.getElementById("chart").closest(".chart-section");
+  const hitCircles = container.querySelectorAll(".chart-point");
+
+  hitCircles.forEach((circle, i) => {
+    const point = points[i];
+    circle.addEventListener("mouseenter", () => {
+      const circleRect = circle.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      tooltip.textContent = `${formatPercent(point.y)} — ${point.dateLabel}`;
+      tooltip.style.left = `${circleRect.left - containerRect.left + circleRect.width / 2}px`;
+      tooltip.style.top = `${circleRect.top - containerRect.top}px`;
+      tooltip.hidden = false;
+    });
+    circle.addEventListener("mouseleave", () => {
+      tooltip.hidden = true;
+    });
+  });
 }
 
 function buildLineChartSvg(points, totalCount) {
@@ -200,20 +297,39 @@ function buildLineChartSvg(points, totalCount) {
   const height = 220;
   const padding = 30;
 
+  const rootStyle = getComputedStyle(document.documentElement);
+  const highlight = rootStyle.getPropertyValue("--highlight").trim();
+  const border = rootStyle.getPropertyValue("--border").trim();
+  const muted = rootStyle.getPropertyValue("--muted").trim();
+
   const xFor = (i) => padding + (i / Math.max(totalCount - 1, 1)) * (width - padding * 2);
   const yFor = (v) => height - padding - v * (height - padding * 2);
 
   const path = points.map((p) => `${xFor(p.x)},${yFor(p.y)}`).join(" ");
   const last = points.at(-1);
+  const first = points[0];
+  const areaPoints = `${xFor(first.x)},${yFor(0)} ${path} ${xFor(last.x)},${yFor(0)}`;
+  const hitCircles = points
+    .map((p) => `<circle class="chart-point" cx="${xFor(p.x)}" cy="${yFor(p.y)}" r="8" />`)
+    .join("");
 
   return `
-    <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
-      <line x1="${padding}" y1="${yFor(0)}" x2="${width - padding}" y2="${yFor(0)}" stroke="#2c2c2f" />
-      <line x1="${padding}" y1="${yFor(1)}" x2="${width - padding}" y2="${yFor(1)}" stroke="#2c2c2f" />
-      <text x="${padding}" y="${yFor(1) - 6}" fill="#a0a0a5" font-size="11">100%</text>
-      <text x="${padding}" y="${yFor(0) - 6}" fill="#a0a0a5" font-size="11">0%</text>
-      <polyline points="${path}" fill="none" stroke="#e8483a" stroke-width="2" />
-      <circle cx="${xFor(last.x)}" cy="${yFor(last.y)}" r="4" fill="#e8483a" />
+    <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Évolution du taux de réponse, de 0 à 100%, sur ${totalCount} semaine(s)">
+      <title>Évolution du taux de réponse sur ${totalCount} semaine(s)</title>
+      <defs>
+        <linearGradient id="chart-area-gradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${highlight}" stop-opacity="0.35" />
+          <stop offset="100%" stop-color="${highlight}" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <line x1="${padding}" y1="${yFor(0)}" x2="${width - padding}" y2="${yFor(0)}" stroke="${border}" />
+      <line x1="${padding}" y1="${yFor(1)}" x2="${width - padding}" y2="${yFor(1)}" stroke="${border}" />
+      <text x="${padding}" y="${yFor(1) - 6}" fill="${muted}" font-size="11">100%</text>
+      <text x="${padding}" y="${yFor(0) - 6}" fill="${muted}" font-size="11">0%</text>
+      <polygon points="${areaPoints}" fill="url(#chart-area-gradient)" stroke="none" />
+      <polyline points="${path}" fill="none" stroke="${highlight}" stroke-width="2" />
+      <circle cx="${xFor(last.x)}" cy="${yFor(last.y)}" r="4" fill="${highlight}" style="pointer-events:none" />
+      ${hitCircles}
     </svg>
   `;
 }
@@ -242,6 +358,19 @@ function formatFollowers(count, previousCount) {
   const delta = count - previousCount;
   const sign = delta > 0 ? "+" : "";
   return `${formatted} (${sign}${delta.toLocaleString("fr-CH")})`;
+}
+
+function replyRateDeltaDirection(rate, previousRate) {
+  if (rate == null || previousRate == null || rate === previousRate) return "";
+  return rate > previousRate ? "up" : "down";
+}
+
+function formatReplyRateDelta(rate, previousRate) {
+  if (rate == null || previousRate == null) return "";
+  const deltaPoints = Math.round((rate - previousRate) * 100);
+  if (deltaPoints === 0) return "= vs période précédente";
+  const sign = deltaPoints > 0 ? "+" : "";
+  return `${sign}${deltaPoints} pt vs période précédente`;
 }
 
 function formatDate(isoDateOrTimestamp) {

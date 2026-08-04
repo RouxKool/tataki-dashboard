@@ -97,7 +97,7 @@ export async function fetchTopLevelComments({ accessToken, postId }) {
 export async function fetchPostInsights({ accessToken, postId, isReel }) {
   const totalInteractions = await fetchSingleInsightMetric({ accessToken, postId, metric: "total_interactions" });
   const shares = await fetchSingleInsightMetric({ accessToken, postId, metric: "shares" });
-  const plays = isReel ? await fetchSingleInsightMetric({ accessToken, postId, metric: "plays" }) : null;
+  const plays = isReel ? await fetchSingleInsightMetric({ accessToken, postId, metric: "views" }) : null;
 
   return { totalInteractions, shares, plays };
 }

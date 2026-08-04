@@ -15,12 +15,10 @@ async function main() {
   for (const week of history) {
     let changed = false;
     for (const post of week.posts) {
-      if (post.totalInteractions != null) continue;
-      const insights = await fetchPostInsights({
-        accessToken,
-        postId: post.id,
-        isReel: post.mediaProductType === "REELS",
-      });
+      const isReel = post.mediaProductType === "REELS";
+      const missingViews = isReel && post.plays == null;
+      if (post.totalInteractions != null && !missingViews) continue;
+      const insights = await fetchPostInsights({ accessToken, postId: post.id, isReel });
       post.shares = insights.shares;
       post.totalInteractions = insights.totalInteractions;
       post.plays = insights.plays;

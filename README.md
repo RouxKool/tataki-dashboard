@@ -11,6 +11,9 @@ consultable en un clic, sans calcul à attendre.
 - Nombre de commentaires répondus / total, nombre de posts publiés, nombre d'abonnés (+ évolution)
 - **Vues totales des Reels**, **engagement total/moyen/médian** — engagement = likes +
   commentaires + partages + enregistrements (`total_interactions`, métrique officielle Instagram)
+- À côté du taux de réponse : comparatifs vs la période précédente sur le **nombre de posts**,
+  **l'engagement moyen par post** et les **vues moyennes par Reel** (pas juste des totaux bruts,
+  pour rester comparable même si le nombre de posts varie d'une période à l'autre)
 - Détail par post de la période sélectionnée : date, type (photo/carrousel/reel), extrait de
   légende (pour identifier le post sans dépendre d'une image — voir "Limites connues"), likes,
   commentaires, répondus, taux, partages, vues. Affiché par 5, avec un bouton "Afficher plus".
@@ -136,6 +139,14 @@ l'ouverture du dashboard, avec un badge **"en cours"** à côté de la date pour
 chiffres ne sont pas définitifs (contrairement aux semaines déjà terminées, calculées une
 seule fois pour de bon). Une fois la semaine finie, le cron du lundi la recalcule une dernière
 fois et le badge disparaît.
+
+**Comparaison équitable pendant la semaine en cours** : comparer une semaine en cours (ex:
+jusqu'à mercredi) à une semaine précédente entière (7 jours) serait trompeur — elle paraîtrait
+toujours "en retard". Le dashboard compare donc, uniquement pour la période en cours, à la
+même tranche de la période précédente (ex: le mercredi de cette semaine vs le mercredi de la
+semaine dernière), calculée à la volée côté navigateur à partir des posts déjà chargés — pas de
+calcul supplémentaire côté serveur. Les périodes déjà terminées continuent de se comparer
+normalement à la période précédente complète.
 
 ## Développement local
 

@@ -89,6 +89,7 @@ function renderSelectedPeriod() {
   if (!period) return;
 
   const previous = periods[index - 1] ?? null;
+  const comparable = getComparableStats(period, previous);
   periodLabel.textContent = period.label;
   prevBtn.disabled = index <= 0;
   nextBtn.disabled = index >= periods.length - 1;
@@ -96,17 +97,22 @@ function renderSelectedPeriod() {
   const inProgressBadge = document.getElementById("in-progress-badge");
   inProgressBadge.hidden = !period.inProgress;
 
-  const deltaEl = document.getElementById("tile-reply-rate-delta");
-  deltaEl.textContent = formatReplyRateDelta(period.replyRate, previous?.replyRate);
-  deltaEl.className = "hero-metric-delta " + replyRateDeltaDirection(period.replyRate, previous?.replyRate);
-
+  setDelta("tile-reply-rate-delta", "hero-metric-delta", formatReplyRateDelta(period.replyRate, comparable?.replyRate), replyRateDeltaDirection(period.replyRate, comparable?.replyRate));
   document.getElementById("tile-reply-rate").textContent = formatPercent(period.replyRate);
-  document.getElementById("tile-answered").textContent = `${period.commentsAnswered} / ${period.commentsTotal}`;
+
   document.getElementById("tile-posts").textContent = String(period.postsCount);
+  setDelta("tile-posts-delta", "hero-mini-delta", formatCountDelta(period.postsCount, comparable?.postsCount), deltaDirection(period.postsCount, comparable?.postsCount));
+
+  document.getElementById("tile-engagement-avg").textContent = formatNumber(period.engagementAvg);
+  setDelta("tile-engagement-avg-delta", "hero-mini-delta", formatPercentChangeDelta(period.engagementAvg, comparable?.engagementAvg), deltaDirection(period.engagementAvg, comparable?.engagementAvg));
+
+  document.getElementById("tile-views-per-reel").textContent = formatNumber(period.viewsPerReel);
+  setDelta("tile-views-per-reel-delta", "hero-mini-delta", formatPercentChangeDelta(period.viewsPerReel, comparable?.viewsPerReel), deltaDirection(period.viewsPerReel, comparable?.viewsPerReel));
+
+  document.getElementById("tile-answered").textContent = `${period.commentsAnswered} / ${period.commentsTotal}`;
   document.getElementById("tile-followers").textContent = formatFollowers(period.followerCount, previous?.followerCount);
   document.getElementById("tile-views").textContent = formatNumber(period.viewsTotal);
   document.getElementById("tile-engagement-total").textContent = formatNumber(period.engagementTotal);
-  document.getElementById("tile-engagement-avg").textContent = formatNumber(period.engagementAvg);
   document.getElementById("tile-engagement-median").textContent = formatNumber(period.engagementMedian);
 
   currentPeriodPosts = period.posts;
@@ -202,6 +208,7 @@ function weekToPeriod(week) {
   return {
     label: `Semaine du ${formatDate(week.weekStart)} au ${formatDate(week.weekEnd)}`,
     dateLabel: formatDate(week.weekStart),
+    startDate: week.weekStart,
     followerCount: week.followerCount,
     posts: week.posts,
     inProgress: Boolean(week.inProgress),
@@ -225,6 +232,7 @@ function buildMonthlyPeriods(history) {
 
       return {
         label: formatMonthLabel(monthKey),
+        startDate: `${monthKey}-01`,
         followerCount: lastWithFollowers?.followerCount ?? null,
         posts,
         inProgress: weeks.some((w) => w.inProgress),
@@ -233,12 +241,30 @@ function buildMonthlyPeriods(history) {
     });
 }
 
+/**
+ * Pour comparer une période en cours (pas encore terminée) équitablement,
+ * on compare aux chiffres de la période précédente "au même stade" (ex: le
+ * mercredi de cette semaine vs le mercredi de la semaine dernière), plutôt
+ * qu'à la période précédente en entier. Une période déjà terminée se
+ * compare simplement à la période précédente complète.
+ */
+function getComparableStats(period, previousPeriod) {
+  if (!previousPeriod) return null;
+  if (!period.inProgress) return previousPeriod;
+
+  const elapsedMs = Date.now() - new Date(`${period.startDate}T00:00:00Z`).getTime();
+  const cutoff = new Date(new Date(`${previousPeriod.startDate}T00:00:00Z`).getTime() + elapsedMs);
+  const comparablePosts = previousPeriod.posts.filter((p) => new Date(p.timestamp) <= cutoff);
+  return aggregatePosts(comparablePosts);
+}
+
 /** Recalcule tous les agrégats d'une période à partir de sa liste de posts. */
 function aggregatePosts(posts) {
   const commentsTotal = posts.reduce((sum, p) => sum + p.commentsTotal, 0);
   const commentsAnswered = posts.reduce((sum, p) => sum + p.commentsAnswered, 0);
   const engagementValues = posts.map((p) => p.totalInteractions).filter((v) => v != null);
   const viewsTotal = posts.reduce((sum, p) => sum + (p.plays ?? 0), 0);
+  const reelsCount = posts.filter((p) => p.mediaProductType === "REELS").length;
 
   return {
     postsCount: posts.length,
@@ -249,6 +275,8 @@ function aggregatePosts(posts) {
     engagementAvg: engagementValues.length ? mean(engagementValues) : null,
     engagementMedian: engagementValues.length ? median(engagementValues) : null,
     viewsTotal,
+    reelsCount,
+    viewsPerReel: reelsCount > 0 ? Math.round(viewsTotal / reelsCount) : null,
   };
 }
 
@@ -363,6 +391,33 @@ function formatFollowers(count, previousCount) {
   const delta = count - previousCount;
   const sign = delta > 0 ? "+" : "";
   return `${formatted} (${sign}${delta.toLocaleString("fr-CH")})`;
+}
+
+function setDelta(elementId, baseClass, text, direction) {
+  const el = document.getElementById(elementId);
+  el.textContent = text;
+  el.className = direction ? `${baseClass} ${direction}` : baseClass;
+}
+
+function deltaDirection(current, previous) {
+  if (current == null || previous == null || current === previous) return "";
+  return current > previous ? "up" : "down";
+}
+
+function formatCountDelta(current, previous) {
+  if (current == null || previous == null) return "";
+  const delta = current - previous;
+  if (delta === 0) return "= vs période précédente";
+  const sign = delta > 0 ? "+" : "";
+  return `${sign}${delta} vs période précédente`;
+}
+
+function formatPercentChangeDelta(current, previous) {
+  if (current == null || previous == null || previous === 0) return "";
+  const pct = Math.round(((current - previous) / previous) * 100);
+  if (pct === 0) return "= vs période précédente";
+  const sign = pct > 0 ? "+" : "";
+  return `${sign}${pct}% vs période précédente`;
 }
 
 function replyRateDeltaDirection(rate, previousRate) {

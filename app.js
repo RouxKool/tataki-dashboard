@@ -93,6 +93,9 @@ function renderSelectedPeriod() {
   prevBtn.disabled = index <= 0;
   nextBtn.disabled = index >= periods.length - 1;
 
+  const inProgressBadge = document.getElementById("in-progress-badge");
+  inProgressBadge.hidden = !period.inProgress;
+
   const deltaEl = document.getElementById("tile-reply-rate-delta");
   deltaEl.textContent = formatReplyRateDelta(period.replyRate, previous?.replyRate);
   deltaEl.className = "hero-metric-delta " + replyRateDeltaDirection(period.replyRate, previous?.replyRate);
@@ -201,6 +204,7 @@ function weekToPeriod(week) {
     dateLabel: formatDate(week.weekStart),
     followerCount: week.followerCount,
     posts: week.posts,
+    inProgress: Boolean(week.inProgress),
     ...aggregatePosts(week.posts),
   };
 }
@@ -223,6 +227,7 @@ function buildMonthlyPeriods(history) {
         label: formatMonthLabel(monthKey),
         followerCount: lastWithFollowers?.followerCount ?? null,
         posts,
+        inProgress: weeks.some((w) => w.inProgress),
         ...aggregatePosts(posts),
       };
     });

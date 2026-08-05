@@ -126,6 +126,19 @@ h2 {
   margin-top: 4px;
 }
 
+.in-progress-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--highlight);
+  color: var(--highlight-text);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .hero-metric {
   background: var(--card-bg);
   border: 1px solid var(--border);

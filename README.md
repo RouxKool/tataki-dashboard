@@ -15,7 +15,12 @@ consultable en un clic, sans calcul à attendre.
   légende (pour identifier le post sans dépendre d'une image — voir "Limites connues"), likes,
   commentaires, répondus, taux, partages, vues. Affiché par 5, avec un bouton "Afficher plus".
 - Une barre chronologique pour naviguer semaine par semaine, ou basculer en vue mensuelle
-- Un graphique d'évolution du taux de réponse dans le temps
+- Un graphique d'évolution du taux de réponse dans le temps, avec un survol affichant le taux
+  et la date exacte de chaque point
+- Tri du tableau "Détail par post" en cliquant sur n'importe quelle colonne (croissant/décroissant)
+- La **semaine en cours** (pas encore terminée) est affichée par défaut, avec un badge
+  "en cours" pour signaler que ses chiffres ne sont pas définitifs — voir "Semaine en cours"
+  ci-dessous
 
 **Non inclus** (limite de l'API Instagram) : impossible de savoir *quel* CM en particulier a
 répondu à quoi — l'API ne distingue pas les personnes derrière le compte Tataki, seulement
@@ -24,8 +29,10 @@ répondu à quoi — l'API ne distingue pas les personnes derrière le compte Ta
 ## Architecture
 
 ```
-GitHub Actions (cron chaque lundi, + rattrapage manuel)
-   → récupère les posts de la semaine passée + tous leurs commentaires/réponses
+GitHub Actions
+   ├─ cron chaque lundi (+ rattrapage manuel) : calcule la semaine qui vient de se terminer
+   └─ cron quotidien : recalcule la semaine en cours (pas encore terminée)
+   → récupère les posts de la période + tous leurs commentaires/réponses
    → calcule le taux de réponse, l'engagement, un instantané du nombre d'abonnés
    → écrit/complète data/history.json (historique versionné dans le repo)
    → push déclenche la republication de GitHub Pages
@@ -55,7 +62,8 @@ Un objet par semaine :
       "shares": 58, "totalInteractions": 3400, "plays": null   // plays non-null seulement pour les Reels
     }
   ],
-  "followerCount": 271330
+  "followerCount": 271330,
+  "inProgress": false   // true si la semaine n'est pas encore terminée au moment du calcul
 }
 ```
 
@@ -116,7 +124,18 @@ automatiquement là où il s'était arrêté (il saute les semaines déjà faite
 
 Une fois terminé, le workflow **"Mise à jour hebdomadaire du dashboard"** prend le relais tout
 seul chaque lundi (calcule la semaine qui vient de se terminer + un nouvel instantané
-d'abonnés), sans plus rien à faire.
+d'abonnés), et **"Rafraîchir la semaine en cours"** tourne chaque jour pour garder la semaine
+en cours à jour — sans plus rien à faire.
+
+## Semaine en cours
+
+En plus des semaines terminées, un workflow quotidien calcule aussi la semaine **en cours**
+(`node scripts/compute-week.js --current`) — ses chiffres évoluent donc jour après jour tant
+que la semaine n'est pas finie. Elle apparaît automatiquement comme période la plus récente à
+l'ouverture du dashboard, avec un badge **"en cours"** à côté de la date pour rappeler que ses
+chiffres ne sont pas définitifs (contrairement aux semaines déjà terminées, calculées une
+seule fois pour de bon). Une fois la semaine finie, le cron du lundi la recalcule une dernière
+fois et le badge disparaît.
 
 ## Développement local
 
@@ -143,13 +162,15 @@ node --env-file=.env scripts/backfill.js 2025-01-06
 - `scripts/lib/weekly-stats.js` — calcule les statistiques d'une semaine donnée
 - `scripts/lib/history-store.js` — lecture/écriture de `data/history.json` et
   `data/followers-history.json`
-- `scripts/compute-week.js` — calcule et enregistre une semaine (la dernière complète par défaut)
+- `scripts/compute-week.js` — calcule et enregistre une semaine (la dernière complète par
+  défaut, ou la semaine en cours avec l'argument `--current`)
 - `scripts/backfill.js` — calcule tout l'historique depuis une date de départ, reprend
   automatiquement en cas d'interruption
 - `scripts/record-follower-snapshot.js` — enregistre l'instantané abonnés de la semaine en cours
 - `scripts/repair-insights.js` — recalcule uniquement l'engagement des posts qui l'ont manqué
   (sans refaire l'appel bien plus coûteux aux commentaires)
 - `.github/workflows/update-weekly.yml` — mise à jour automatique chaque lundi
+- `.github/workflows/update-current-week.yml` — rafraîchissement quotidien de la semaine en cours
 - `.github/workflows/backfill.yml` — rattrapage manuel de l'historique
 - `.github/workflows/repair-insights.yml` — réparation manuelle de l'engagement manquant
 

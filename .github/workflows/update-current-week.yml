@@ -1,0 +1,39 @@
+name: Rafraîchir la semaine en cours
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # tous les jours à 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-current-week:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Calculer la semaine en cours (pas encore terminée)
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+        run: node scripts/compute-week.js --current
+
+      - name: Commit et push si les données ont changé
+        run: |
+          if git diff --quiet -- data/; then
+            echo "Aucun changement, rien à committer."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "chore: rafraichissement de la semaine en cours [skip ci]"
+          git push

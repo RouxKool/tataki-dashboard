@@ -27,5 +27,6 @@ export async function computeWeekStats({ accessToken, businessAccountId, ownUser
     weekEnd: weekEndISO,
     posts: postStats,
     followerCount: lookupFollowerCount(weekStartISO),
+    inProgress: rangeEnd > new Date(),
   };
 }

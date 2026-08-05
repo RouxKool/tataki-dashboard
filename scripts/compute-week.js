@@ -5,15 +5,24 @@ import { mondayOf, addDays } from "./lib/dates.js";
 
 /**
  * Calcule et enregistre les statistiques de la dernière semaine complète
- * (celle qui vient de se terminer), ou d'une semaine précise si sa date de
- * lundi est passée en argument (ex: node scripts/compute-week.js 2025-06-02).
+ * (celle qui vient de se terminer) par défaut. Deux arguments possibles :
+ *   - une date de lundi précise (ex: node scripts/compute-week.js 2025-06-02)
+ *   - "--current" pour calculer la semaine en cours (pas encore terminée),
+ *     rafraîchie quotidiennement par le workflow dédié
  */
 async function main() {
   const accessToken = requireEnv("INSTAGRAM_ACCESS_TOKEN");
   const businessAccountId = requireEnv("INSTAGRAM_BUSINESS_ACCOUNT_ID");
 
   const weekStartArg = process.argv[2];
-  const weekStart = weekStartArg ? new Date(`${weekStartArg}T00:00:00Z`) : addDays(mondayOf(new Date()), -7);
+  let weekStart;
+  if (weekStartArg === "--current") {
+    weekStart = mondayOf(new Date());
+  } else if (weekStartArg) {
+    weekStart = new Date(`${weekStartArg}T00:00:00Z`);
+  } else {
+    weekStart = addDays(mondayOf(new Date()), -7);
+  }
 
   const ownUsername = await fetchAccountUsername({ accessToken, businessAccountId });
   const weekEntry = await computeWeekStats({ accessToken, businessAccountId, ownUsername, weekStart });

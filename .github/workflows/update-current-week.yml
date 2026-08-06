@@ -2,7 +2,8 @@ name: Rafraîchir la semaine en cours
 
 on:
   schedule:
-    - cron: "0 6 * * *" # tous les jours à 06:00 UTC
+    - cron: "0 9 * * *"  # tous les jours à 11:00 heure suisse (09:00 UTC, CEST)
+    - cron: "0 16 * * *" # tous les jours à 18:00 heure suisse (16:00 UTC, CEST)
   workflow_dispatch: {}
 
 permissions:

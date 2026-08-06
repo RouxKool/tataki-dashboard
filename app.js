@@ -118,6 +118,23 @@ function renderSelectedPeriod() {
   currentPeriodPosts = period.posts;
   visibleRowCount = TABLE_PAGE_SIZE;
   renderPostsTableRows();
+
+  updateChartSelection(resolveSelectedWeekIndex(index, period));
+}
+
+/**
+ * Le graphique trace toujours la tendance hebdomadaire. En mode Semaine,
+ * la semaine sélectionnée correspond directement à l'index de la timeline ;
+ * en mode Mois, on suit la dernière semaine appartenant au mois sélectionné.
+ */
+function resolveSelectedWeekIndex(index, period) {
+  if (mode === "week") return index;
+
+  const monthKey = period.startDate.slice(0, 7);
+  for (let i = weeklyPeriods.length - 1; i >= 0; i--) {
+    if (weeklyPeriods[i].startDate.slice(0, 7) === monthKey) return i;
+  }
+  return weeklyPeriods.length - 1;
 }
 
 function renderPostsTableRows() {
@@ -290,6 +307,8 @@ function median(values) {
   return sorted.length % 2 === 0 ? Math.round((sorted[mid - 1] + sorted[mid]) / 2) : sorted[mid];
 }
 
+let selectedWeekIndex = null;
+
 function renderChart(periods) {
   const points = periods
     .map((p, i) => ({ x: i, y: p.replyRate, dateLabel: p.dateLabel }))
@@ -301,28 +320,54 @@ function renderChart(periods) {
     return;
   }
   chartEl.innerHTML = buildLineChartSvg(points, periods.length);
-  attachChartTooltip(points);
+  attachChartHoverHandlers();
+  if (selectedWeekIndex != null) updateChartSelection(selectedWeekIndex);
 }
 
-function attachChartTooltip(points) {
-  const tooltip = document.getElementById("chart-tooltip");
+function attachChartHoverHandlers() {
   const container = document.getElementById("chart").closest(".chart-section");
-  const hitCircles = container.querySelectorAll(".chart-point");
-
-  hitCircles.forEach((circle, i) => {
-    const point = points[i];
-    circle.addEventListener("mouseenter", () => {
-      const circleRect = circle.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      tooltip.textContent = `${formatPercent(point.y)} — ${point.dateLabel}`;
-      tooltip.style.left = `${circleRect.left - containerRect.left + circleRect.width / 2}px`;
-      tooltip.style.top = `${circleRect.top - containerRect.top}px`;
-      tooltip.hidden = false;
-    });
+  container.querySelectorAll(".chart-point").forEach((circle) => {
+    circle.addEventListener("mouseenter", () => showChartTooltip(circle));
     circle.addEventListener("mouseleave", () => {
-      tooltip.hidden = true;
+      const selectedCircle = container.querySelector(`.chart-point[data-period-index="${selectedWeekIndex}"]`);
+      if (selectedCircle) showChartTooltip(selectedCircle);
+      else document.getElementById("chart-tooltip").hidden = true;
     });
   });
+}
+
+function showChartTooltip(circle) {
+  const tooltip = document.getElementById("chart-tooltip");
+  const container = document.getElementById("chart").closest(".chart-section");
+  const circleRect = circle.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  tooltip.textContent = `${formatPercent(Number(circle.dataset.rate))} — ${circle.dataset.dateLabel}`;
+  tooltip.style.left = `${circleRect.left - containerRect.left + circleRect.width / 2}px`;
+  tooltip.style.top = `${circleRect.top - containerRect.top}px`;
+  tooltip.hidden = false;
+}
+
+/** Déplace le gros point permanent sur la semaine actuellement sélectionnée dans la timeline. */
+function updateChartSelection(weekIndex) {
+  selectedWeekIndex = weekIndex;
+  const container = document.getElementById("chart").closest(".chart-section");
+  if (!container) return;
+
+  const selectedDot = document.getElementById("chart-selected-dot");
+  const matchingCircle = container.querySelector(`.chart-point[data-period-index="${weekIndex}"]`);
+
+  if (!matchingCircle) {
+    if (selectedDot) selectedDot.style.display = "none";
+    document.getElementById("chart-tooltip").hidden = true;
+    return;
+  }
+
+  if (selectedDot) {
+    selectedDot.style.display = "";
+    selectedDot.setAttribute("cx", matchingCircle.getAttribute("cx"));
+    selectedDot.setAttribute("cy", matchingCircle.getAttribute("cy"));
+  }
+  showChartTooltip(matchingCircle);
 }
 
 function buildLineChartSvg(points, totalCount) {
@@ -343,7 +388,10 @@ function buildLineChartSvg(points, totalCount) {
   const first = points[0];
   const areaPoints = `${xFor(first.x)},${yFor(0)} ${path} ${xFor(last.x)},${yFor(0)}`;
   const hitCircles = points
-    .map((p) => `<circle class="chart-point" cx="${xFor(p.x)}" cy="${yFor(p.y)}" r="8" />`)
+    .map(
+      (p) =>
+        `<circle class="chart-point" data-period-index="${p.x}" data-rate="${p.y}" data-date-label="${p.dateLabel}" cx="${xFor(p.x)}" cy="${yFor(p.y)}" r="8" />`
+    )
     .join("");
 
   return `
@@ -361,7 +409,7 @@ function buildLineChartSvg(points, totalCount) {
       <text x="${padding}" y="${yFor(0) - 6}" fill="${muted}" font-size="11">0%</text>
       <polygon points="${areaPoints}" fill="url(#chart-area-gradient)" stroke="none" />
       <polyline points="${path}" fill="none" stroke="${highlight}" stroke-width="2" />
-      <circle cx="${xFor(last.x)}" cy="${yFor(last.y)}" r="4" fill="${highlight}" style="pointer-events:none" />
+      <circle id="chart-selected-dot" cx="${xFor(last.x)}" cy="${yFor(last.y)}" r="5" fill="${highlight}" style="pointer-events:none" />
       ${hitCircles}
     </svg>
   `;

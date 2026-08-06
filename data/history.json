@@ -7320,5 +7320,97 @@
       }
     ],
     "followerCount": 286321
+  },
+  {
+    "weekStart": "2026-08-03",
+    "weekEnd": "2026-08-09",
+    "posts": [
+      {
+        "id": "18197131477374491",
+        "permalink": "https://www.instagram.com/p/DbqdkU3jEOf/",
+        "timestamp": "2026-08-05T15:28:48+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Tu pensais que les marches pour le climat avaient disparu ? 🌍 Après un été marqué par des canicules…",
+        "likeCount": 2434,
+        "commentsTotal": 29,
+        "commentsAnswered": 10,
+        "shares": 375,
+        "totalInteractions": 3183,
+        "plays": null
+      },
+      {
+        "id": "17890076421600548",
+        "permalink": "https://www.instagram.com/p/DbqTuK6DNVm/",
+        "timestamp": "2026-08-05T14:02:46+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Près d’un an après la mort de Jean Pormanove, la justice a rendu sa décision. ⚖️ Naruto a été condam…",
+        "likeCount": 1608,
+        "commentsTotal": 34,
+        "commentsAnswered": 0,
+        "shares": 131,
+        "totalInteractions": 1881,
+        "plays": null
+      },
+      {
+        "id": "18078290396690367",
+        "permalink": "https://www.instagram.com/p/DbqMpWgDCO9/",
+        "timestamp": "2026-08-05T13:00:56+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "L’IA est partout… et ça commence à fatiguer pas mal de monde. 🤖 Jeux vidéo doublés par IA, pubs qui…",
+        "likeCount": 2664,
+        "commentsTotal": 52,
+        "commentsAnswered": 11,
+        "shares": 274,
+        "totalInteractions": 3665,
+        "plays": null
+      },
+      {
+        "id": "17943966579055771",
+        "permalink": "https://www.instagram.com/p/DbnzyUEDHpi/",
+        "timestamp": "2026-08-04T14:45:02+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Une enquête sur LEGEND, le podcast le plus écouté de France, a été retirée de YouTube quelques heure…",
+        "likeCount": 21082,
+        "commentsTotal": 180,
+        "commentsAnswered": 74,
+        "shares": 1863,
+        "totalInteractions": 26628,
+        "plays": null
+      },
+      {
+        "id": "18121168675881159",
+        "permalink": "https://www.instagram.com/reel/DbnupEBNDvJ/",
+        "timestamp": "2026-08-04T14:00:07+0000",
+        "mediaType": "VIDEO",
+        "mediaProductType": "REELS",
+        "captionPreview": "💬💔 « On me voit déjà comme une personne noire, si en plus je rajoute que je suis trans... C’est le…",
+        "likeCount": 2308,
+        "commentsTotal": 55,
+        "commentsAnswered": 28,
+        "shares": 232,
+        "totalInteractions": 3021,
+        "plays": 84666
+      },
+      {
+        "id": "18007551575955547",
+        "permalink": "https://www.instagram.com/p/DblbmIFDFcH/",
+        "timestamp": "2026-08-03T16:35:01+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Les influenceur.euse.s font-ils encore rêver ? 📱 Pendant longtemps, ils représentaient un idéal de …",
+        "likeCount": 11372,
+        "commentsTotal": 142,
+        "commentsAnswered": 16,
+        "shares": 1279,
+        "totalInteractions": 15022,
+        "plays": null
+      }
+    ],
+    "followerCount": 287677,
+    "inProgress": true
   }
 ]

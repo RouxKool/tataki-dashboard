@@ -7326,17 +7326,31 @@
     "weekEnd": "2026-08-09",
     "posts": [
       {
+        "id": "17952643275237231",
+        "permalink": "https://www.instagram.com/p/DbxfjLTDCDO/",
+        "timestamp": "2026-08-08T09:00:03+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Le livre qui fait revivre le sacre historique de Gottéron. 🐉🏆 Depuis plus de dix ans, le photograp…",
+        "likeCount": 189,
+        "commentsTotal": 5,
+        "commentsAnswered": 3,
+        "shares": 0,
+        "totalInteractions": 209,
+        "plays": null
+      },
+      {
         "id": "18374863366229492",
         "permalink": "https://www.instagram.com/p/Dbu8_68jIEr/",
         "timestamp": "2026-08-07T09:20:25+0000",
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Ces derniers temps, le corps d’Ariana Grande fait énormément parler. L’occasion d’aborder un sujet i…",
-        "likeCount": 3446,
-        "commentsTotal": 22,
-        "commentsAnswered": 14,
-        "shares": 243,
-        "totalInteractions": 4077,
+        "likeCount": 5537,
+        "commentsTotal": 42,
+        "commentsAnswered": 19,
+        "shares": 367,
+        "totalInteractions": 6608,
         "plays": null
       },
       {
@@ -7346,11 +7360,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Et si le jeu vidéo était bien plus qu’un simple divertissement ? 🎮 C’est ce que défend le streamer …",
-        "likeCount": 2448,
-        "commentsTotal": 33,
+        "likeCount": 2826,
+        "commentsTotal": 43,
         "commentsAnswered": 8,
-        "shares": 205,
-        "totalInteractions": 3188,
+        "shares": 252,
+        "totalInteractions": 3698,
         "plays": null
       },
       {
@@ -7360,11 +7374,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Tu pensais que les marches pour le climat avaient disparu ? 🌍 Après un été marqué par des canicules…",
-        "likeCount": 3919,
+        "likeCount": 4206,
         "commentsTotal": 43,
         "commentsAnswered": 15,
-        "shares": 568,
-        "totalInteractions": 5100,
+        "shares": 595,
+        "totalInteractions": 5443,
         "plays": null
       },
       {
@@ -7374,11 +7388,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Près d’un an après la mort de Jean Pormanove, la justice a rendu sa décision. ⚖️ Naruto a été condam…",
-        "likeCount": 1912,
+        "likeCount": 1957,
         "commentsTotal": 39,
         "commentsAnswered": 3,
-        "shares": 141,
-        "totalInteractions": 2240,
+        "shares": 143,
+        "totalInteractions": 2292,
         "plays": null
       },
       {
@@ -7388,11 +7402,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "L’IA est partout… et ça commence à fatiguer pas mal de monde. 🤖 Jeux vidéo doublés par IA, pubs qui…",
-        "likeCount": 3657,
-        "commentsTotal": 72,
+        "likeCount": 3814,
+        "commentsTotal": 74,
         "commentsAnswered": 25,
-        "shares": 385,
-        "totalInteractions": 5091,
+        "shares": 403,
+        "totalInteractions": 5313,
         "plays": null
       },
       {
@@ -7402,11 +7416,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Une enquête sur LEGEND, le podcast le plus écouté de France, a été retirée de YouTube quelques heure…",
-        "likeCount": 21969,
-        "commentsTotal": 183,
+        "likeCount": 22125,
+        "commentsTotal": 182,
         "commentsAnswered": 78,
-        "shares": 1931,
-        "totalInteractions": 27704,
+        "shares": 1939,
+        "totalInteractions": 27885,
         "plays": null
       },
       {
@@ -7416,12 +7430,12 @@
         "mediaType": "VIDEO",
         "mediaProductType": "REELS",
         "captionPreview": "💬💔 « On me voit déjà comme une personne noire, si en plus je rajoute que je suis trans... C’est le…",
-        "likeCount": 2477,
+        "likeCount": 2538,
         "commentsTotal": 59,
         "commentsAnswered": 28,
-        "shares": 240,
-        "totalInteractions": 3230,
-        "plays": 90684
+        "shares": 245,
+        "totalInteractions": 3311,
+        "plays": 92750
       },
       {
         "id": "18007551575955547",
@@ -7430,11 +7444,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Les influenceur.euse.s font-ils encore rêver ? 📱 Pendant longtemps, ils représentaient un idéal de …",
-        "likeCount": 12115,
-        "commentsTotal": 152,
+        "likeCount": 12361,
+        "commentsTotal": 155,
         "commentsAnswered": 16,
-        "shares": 1383,
-        "totalInteractions": 15992,
+        "shares": 1407,
+        "totalInteractions": 16300,
         "plays": null
       }
     ],

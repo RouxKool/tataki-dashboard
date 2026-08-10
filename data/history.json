@@ -7472,7 +7472,36 @@
   {
     "weekStart": "2026-08-10",
     "weekEnd": "2026-08-16",
-    "posts": [],
+    "posts": [
+      {
+        "id": "18160174909487470",
+        "permalink": "https://www.instagram.com/p/Db3Sd1wDYHw/",
+        "timestamp": "2026-08-10T15:01:56+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Tu connaissais déjà Gossip Gyalz ? 🎙️ GG et Savannah se connaissent depuis qu’elles ont 8 ans, et ç…",
+        "likeCount": 344,
+        "commentsTotal": 15,
+        "commentsAnswered": 6,
+        "shares": 59,
+        "totalInteractions": 514,
+        "plays": null
+      },
+      {
+        "id": "18112119715998036",
+        "permalink": "https://www.instagram.com/p/Db3LsC-jHU1/",
+        "timestamp": "2026-08-10T14:02:42+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Mercredi soir, une éclipse solaire sera visible depuis la Suisse. 🌒 Un phénomène aussi fascinant qu…",
+        "likeCount": 1271,
+        "commentsTotal": 7,
+        "commentsAnswered": 5,
+        "shares": 924,
+        "totalInteractions": 2524,
+        "plays": null
+      }
+    ],
     "followerCount": 289201,
     "inProgress": true
   }

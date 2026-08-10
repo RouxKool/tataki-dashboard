@@ -333,7 +333,21 @@ function attachChartHoverHandlers() {
       if (selectedCircle) showChartTooltip(selectedCircle);
       else document.getElementById("chart-tooltip").hidden = true;
     });
+    circle.addEventListener("click", () => goToWeekFromChart(Number(circle.dataset.periodIndex)));
   });
+}
+
+/** Bascule la timeline sur la semaine cliquée dans le graphique (passe en mode Semaine si besoin). */
+function goToWeekFromChart(weekIndex) {
+  if (mode !== "week") {
+    mode = "week";
+    modeWeekBtn.classList.add("active");
+    modeMonthBtn.classList.remove("active");
+    timeline.min = "0";
+    timeline.max = String(Math.max(weeklyPeriods.length - 1, 0));
+  }
+  timeline.value = String(weekIndex);
+  renderSelectedPeriod();
 }
 
 function showChartTooltip(circle) {

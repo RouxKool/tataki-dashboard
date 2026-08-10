@@ -7468,5 +7468,12 @@
     ],
     "followerCount": 287677,
     "inProgress": false
+  },
+  {
+    "weekStart": "2026-08-10",
+    "weekEnd": "2026-08-16",
+    "posts": [],
+    "followerCount": 289201,
+    "inProgress": true
   }
 ]

@@ -7332,11 +7332,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Pourquoi tout le monde compare cette ambassadrice à une IA ? 🤖 Callista Gingrich représente les Éta…",
-        "likeCount": 4566,
-        "commentsTotal": 182,
+        "likeCount": 6222,
+        "commentsTotal": 307,
         "commentsAnswered": 1,
-        "shares": 2206,
-        "totalInteractions": 8067,
+        "shares": 3923,
+        "totalInteractions": 12101,
         "plays": null
       },
       {
@@ -7346,11 +7346,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Le livre qui fait revivre le sacre historique de Gottéron. 🐉🏆 Depuis plus de dix ans, le photograp…",
-        "likeCount": 1202,
+        "likeCount": 1246,
         "commentsTotal": 12,
         "commentsAnswered": 3,
         "shares": 37,
-        "totalInteractions": 1303,
+        "totalInteractions": 1350,
         "plays": null
       },
       {
@@ -7360,11 +7360,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Ces derniers temps, le corps d’Ariana Grande fait énormément parler. L’occasion d’aborder un sujet i…",
-        "likeCount": 6842,
-        "commentsTotal": 53,
+        "likeCount": 7095,
+        "commentsTotal": 55,
         "commentsAnswered": 18,
-        "shares": 459,
-        "totalInteractions": 8192,
+        "shares": 472,
+        "totalInteractions": 8479,
         "plays": null
       },
       {
@@ -7374,11 +7374,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Et si le jeu vidéo était bien plus qu’un simple divertissement ? 🎮 C’est ce que défend le streamer …",
-        "likeCount": 3337,
-        "commentsTotal": 50,
+        "likeCount": 3454,
+        "commentsTotal": 53,
         "commentsAnswered": 8,
-        "shares": 294,
-        "totalInteractions": 4358,
+        "shares": 311,
+        "totalInteractions": 4531,
         "plays": null
       },
       {
@@ -7388,11 +7388,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Tu pensais que les marches pour le climat avaient disparu ? 🌍 Après un été marqué par des canicules…",
-        "likeCount": 4754,
-        "commentsTotal": 43,
+        "likeCount": 4890,
+        "commentsTotal": 45,
         "commentsAnswered": 15,
-        "shares": 619,
-        "totalInteractions": 6083,
+        "shares": 624,
+        "totalInteractions": 6236,
         "plays": null
       },
       {
@@ -7402,11 +7402,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Près d’un an après la mort de Jean Pormanove, la justice a rendu sa décision. ⚖️ Naruto a été condam…",
-        "likeCount": 2027,
-        "commentsTotal": 39,
+        "likeCount": 2048,
+        "commentsTotal": 40,
         "commentsAnswered": 3,
         "shares": 145,
-        "totalInteractions": 2379,
+        "totalInteractions": 2402,
         "plays": null
       },
       {
@@ -7416,11 +7416,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "L’IA est partout… et ça commence à fatiguer pas mal de monde. 🤖 Jeux vidéo doublés par IA, pubs qui…",
-        "likeCount": 4115,
-        "commentsTotal": 82,
+        "likeCount": 4231,
+        "commentsTotal": 83,
         "commentsAnswered": 25,
-        "shares": 445,
-        "totalInteractions": 5771,
+        "shares": 458,
+        "totalInteractions": 5931,
         "plays": null
       },
       {
@@ -7430,11 +7430,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Une enquête sur LEGEND, le podcast le plus écouté de France, a été retirée de YouTube quelques heure…",
-        "likeCount": 22370,
+        "likeCount": 22433,
         "commentsTotal": 181,
         "commentsAnswered": 77,
-        "shares": 1949,
-        "totalInteractions": 28157,
+        "shares": 1950,
+        "totalInteractions": 28227,
         "plays": null
       },
       {
@@ -7444,12 +7444,12 @@
         "mediaType": "VIDEO",
         "mediaProductType": "REELS",
         "captionPreview": "💬💔 « On me voit déjà comme une personne noire, si en plus je rajoute que je suis trans... C’est le…",
-        "likeCount": 2648,
+        "likeCount": 2688,
         "commentsTotal": 59,
         "commentsAnswered": 28,
-        "shares": 250,
-        "totalInteractions": 3437,
-        "plays": 96460
+        "shares": 252,
+        "totalInteractions": 3484,
+        "plays": 97849
       },
       {
         "id": "18007551575955547",
@@ -7458,15 +7458,15 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Les influenceur.euse.s font-ils encore rêver ? 📱 Pendant longtemps, ils représentaient un idéal de …",
-        "likeCount": 12957,
-        "commentsTotal": 157,
+        "likeCount": 13184,
+        "commentsTotal": 159,
         "commentsAnswered": 16,
-        "shares": 1486,
-        "totalInteractions": 17095,
+        "shares": 1527,
+        "totalInteractions": 17393,
         "plays": null
       }
     ],
     "followerCount": 287677,
-    "inProgress": true
+    "inProgress": false
   }
 ]

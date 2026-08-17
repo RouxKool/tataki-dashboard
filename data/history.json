@@ -7672,5 +7672,41 @@
     ],
     "followerCount": 289201,
     "inProgress": false
+  },
+  {
+    "weekStart": "2026-08-17",
+    "weekEnd": "2026-08-23",
+    "posts": [
+      {
+        "id": "18113574287473043",
+        "permalink": "https://www.instagram.com/reel/DcIsjv1Mf8k/",
+        "timestamp": "2026-08-17T09:18:34+0000",
+        "mediaType": "VIDEO",
+        "mediaProductType": "REELS",
+        "captionPreview": "🚫 T’as déjà voulu cancel quelqu’un mais continué à écouter sa musique quand même ? On était au @pal…",
+        "likeCount": 219,
+        "commentsTotal": 3,
+        "commentsAnswered": 0,
+        "shares": 0,
+        "totalInteractions": 241,
+        "plays": 10570
+      },
+      {
+        "id": "18113110046069481",
+        "permalink": "https://www.instagram.com/p/DcIi16uDJ6o/",
+        "timestamp": "2026-08-17T07:52:07+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Tu pensais que la saison des festivals était déjà finie ? 👀🎶 La rentrée approche, mais l’été n’a p…",
+        "likeCount": 371,
+        "commentsTotal": 11,
+        "commentsAnswered": 9,
+        "shares": 0,
+        "totalInteractions": 455,
+        "plays": null
+      }
+    ],
+    "followerCount": 290219,
+    "inProgress": true
   }
 ]

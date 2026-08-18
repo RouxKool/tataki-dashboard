@@ -7678,18 +7678,46 @@
     "weekEnd": "2026-08-23",
     "posts": [
       {
+        "id": "17984909400103879",
+        "permalink": "https://www.instagram.com/p/DcL7DL6DOln/",
+        "timestamp": "2026-08-18T15:21:22+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "💪 T’es du genre à culpabiliser de fou si tu loupes ta séance de sport ? En Suisse, on n’a jamais au…",
+        "likeCount": 789,
+        "commentsTotal": 5,
+        "commentsAnswered": 4,
+        "shares": 0,
+        "totalInteractions": 896,
+        "plays": null
+      },
+      {
+        "id": "18097973969457211",
+        "permalink": "https://www.instagram.com/p/DcL0lPBjCXS/",
+        "timestamp": "2026-08-18T14:24:51+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "T’as déjà ton outfit prêt pour un des derniers gros banger de ces vacances ? 🌟 Le samedi 29 août, o…",
+        "likeCount": 436,
+        "commentsTotal": 117,
+        "commentsAnswered": 0,
+        "shares": 204,
+        "totalInteractions": 930,
+        "plays": null
+      },
+      {
         "id": "18166662760459561",
         "permalink": "https://www.instagram.com/reel/DcLRNqMNR-7/",
         "timestamp": "2026-08-18T09:15:09+0000",
         "mediaType": "VIDEO",
         "mediaProductType": "REELS",
         "captionPreview": "💸 T’as déjà fini le mois à sec en te demandant comment kiffer ton week-end ? On est partis à ta ren…",
-        "likeCount": 92,
-        "commentsTotal": 0,
-        "commentsAnswered": 0,
-        "shares": 0,
-        "totalInteractions": 96,
-        "plays": 5602
+        "likeCount": 669,
+        "commentsTotal": 3,
+        "commentsAnswered": 2,
+        "shares": 112,
+        "totalInteractions": 827,
+        "plays": 35117
       },
       {
         "id": "17902681974329896",
@@ -7698,11 +7726,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "📱 T’as déjà partagé un truc hyper choquant pour te rendre compte 5 minutes après que c’était un gro…",
-        "likeCount": 579,
-        "commentsTotal": 7,
-        "commentsAnswered": 5,
-        "shares": 61,
-        "totalInteractions": 752,
+        "likeCount": 1405,
+        "commentsTotal": 16,
+        "commentsAnswered": 12,
+        "shares": 194,
+        "totalInteractions": 1935,
         "plays": null
       },
       {
@@ -7712,11 +7740,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "T’imagines tomber en plein milieu d’une course et finir avec une médaille d’or autour du cou le lend…",
-        "likeCount": 3317,
+        "likeCount": 3619,
         "commentsTotal": 13,
         "commentsAnswered": 6,
-        "shares": 40,
-        "totalInteractions": 3441,
+        "shares": 44,
+        "totalInteractions": 3753,
         "plays": null
       },
       {
@@ -7726,11 +7754,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Est-ce que t’as déjà réalisé à quel point le cinéma de chez nous peut être puissant quand il s’empar…",
-        "likeCount": 1475,
+        "likeCount": 1646,
         "commentsTotal": 9,
         "commentsAnswered": 1,
-        "shares": 69,
-        "totalInteractions": 1690,
+        "shares": 79,
+        "totalInteractions": 1894,
         "plays": null
       },
       {
@@ -7740,12 +7768,12 @@
         "mediaType": "VIDEO",
         "mediaProductType": "REELS",
         "captionPreview": "🚫 T’as déjà voulu cancel quelqu’un mais continué à écouter sa musique quand même ? On était au @pal…",
-        "likeCount": 4272,
-        "commentsTotal": 64,
+        "likeCount": 4636,
+        "commentsTotal": 70,
         "commentsAnswered": 23,
-        "shares": 384,
-        "totalInteractions": 5284,
-        "plays": 157928
+        "shares": 401,
+        "totalInteractions": 5722,
+        "plays": 166523
       },
       {
         "id": "18113110046069481",
@@ -7754,11 +7782,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Tu pensais que la saison des festivals était déjà finie ? 👀🎶 La rentrée approche, mais l’été n’a p…",
-        "likeCount": 997,
-        "commentsTotal": 27,
+        "likeCount": 1080,
+        "commentsTotal": 28,
         "commentsAnswered": 16,
-        "shares": 159,
-        "totalInteractions": 1367,
+        "shares": 183,
+        "totalInteractions": 1488,
         "plays": null
       }
     ],

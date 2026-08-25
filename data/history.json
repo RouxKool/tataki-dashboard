@@ -7952,17 +7952,45 @@
     "weekEnd": "2026-08-30",
     "posts": [
       {
+        "id": "18049271951645346",
+        "permalink": "https://www.instagram.com/p/Dcd6azEl4Lg/",
+        "timestamp": "2026-08-25T15:02:11+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Tu trouves que les influenceur.euse.s devraient parler de leurs opinions politiques ? 🤔 La polémiqu…",
+        "likeCount": 1215,
+        "commentsTotal": 22,
+        "commentsAnswered": 3,
+        "shares": 33,
+        "totalInteractions": 1395,
+        "plays": null
+      },
+      {
+        "id": "18404124439091681",
+        "permalink": "https://www.instagram.com/p/DcdsGTelyz6/",
+        "timestamp": "2026-08-25T12:57:03+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Label Suisse revient à Lausanne pour trois jours de musique 100 % suisse… et 100 % gratuite. 🇨🇭🎶 …",
+        "likeCount": 901,
+        "commentsTotal": 11,
+        "commentsAnswered": 8,
+        "shares": 247,
+        "totalInteractions": 1259,
+        "plays": null
+      },
+      {
         "id": "18021971537696723",
         "permalink": "https://www.instagram.com/p/DcbgeP8l41o/",
         "timestamp": "2026-08-24T16:36:58+0000",
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Un an après la mort de Marvin, son absence reste bien présente à Prélaz. 🕯️ La disparition du jeune…",
-        "likeCount": 1281,
+        "likeCount": 1520,
         "commentsTotal": 8,
-        "commentsAnswered": 4,
-        "shares": 70,
-        "totalInteractions": 1469,
+        "commentsAnswered": 5,
+        "shares": 85,
+        "totalInteractions": 1748,
         "plays": null
       },
       {
@@ -7972,11 +8000,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Jorja Smith te fait danser sur ses textes les plus intimes. ❤️‍🩹 Avec « What Are The Odds », l’arti…",
-        "likeCount": 716,
+        "likeCount": 789,
         "commentsTotal": 2,
         "commentsAnswered": 2,
-        "shares": 29,
-        "totalInteractions": 846,
+        "shares": 30,
+        "totalInteractions": 935,
         "plays": null
       },
       {
@@ -7986,12 +8014,12 @@
         "mediaType": "VIDEO",
         "mediaProductType": "REELS",
         "captionPreview": "C’est quoi votre plus grande peur ? 😨 La peur, c’est universel. Tout le monde en a une (ou beaucoup…",
-        "likeCount": 601,
+        "likeCount": 646,
         "commentsTotal": 4,
         "commentsAnswered": 4,
-        "shares": 54,
-        "totalInteractions": 704,
-        "plays": 44647
+        "shares": 56,
+        "totalInteractions": 755,
+        "plays": 47860
       }
     ],
     "followerCount": 290891,

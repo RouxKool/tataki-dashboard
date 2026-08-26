@@ -7952,17 +7952,31 @@
     "weekEnd": "2026-08-30",
     "posts": [
       {
+        "id": "18624860032015715",
+        "permalink": "https://www.instagram.com/p/DcftNfjFyPR/",
+        "timestamp": "2026-08-26T07:45:15+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Une IA peut-elle être raciste sans même s’en rendre compte ? 🤖 Des réponses de Gemini ont récemment…",
+        "likeCount": 862,
+        "commentsTotal": 18,
+        "commentsAnswered": 0,
+        "shares": 298,
+        "totalInteractions": 1261,
+        "plays": null
+      },
+      {
         "id": "18049271951645346",
         "permalink": "https://www.instagram.com/p/Dcd6azEl4Lg/",
         "timestamp": "2026-08-25T15:02:11+0000",
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Tu trouves que les influenceur.euse.s devraient parler de leurs opinions politiques ? 🤔 La polémiqu…",
-        "likeCount": 1215,
-        "commentsTotal": 22,
+        "likeCount": 3341,
+        "commentsTotal": 49,
         "commentsAnswered": 3,
-        "shares": 33,
-        "totalInteractions": 1395,
+        "shares": 140,
+        "totalInteractions": 3911,
         "plays": null
       },
       {
@@ -7972,11 +7986,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Label Suisse revient à Lausanne pour trois jours de musique 100 % suisse… et 100 % gratuite. 🇨🇭🎶 …",
-        "likeCount": 901,
-        "commentsTotal": 11,
+        "likeCount": 1735,
+        "commentsTotal": 18,
         "commentsAnswered": 8,
-        "shares": 247,
-        "totalInteractions": 1259,
+        "shares": 471,
+        "totalInteractions": 2463,
         "plays": null
       },
       {
@@ -7986,11 +8000,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Un an après la mort de Marvin, son absence reste bien présente à Prélaz. 🕯️ La disparition du jeune…",
-        "likeCount": 1520,
-        "commentsTotal": 8,
+        "likeCount": 1689,
+        "commentsTotal": 10,
         "commentsAnswered": 5,
-        "shares": 85,
-        "totalInteractions": 1748,
+        "shares": 94,
+        "totalInteractions": 1942,
         "plays": null
       },
       {
@@ -8000,11 +8014,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Jorja Smith te fait danser sur ses textes les plus intimes. ❤️‍🩹 Avec « What Are The Odds », l’arti…",
-        "likeCount": 789,
+        "likeCount": 831,
         "commentsTotal": 2,
         "commentsAnswered": 2,
-        "shares": 30,
-        "totalInteractions": 935,
+        "shares": 33,
+        "totalInteractions": 985,
         "plays": null
       },
       {
@@ -8014,12 +8028,12 @@
         "mediaType": "VIDEO",
         "mediaProductType": "REELS",
         "captionPreview": "C’est quoi votre plus grande peur ? 😨 La peur, c’est universel. Tout le monde en a une (ou beaucoup…",
-        "likeCount": 646,
+        "likeCount": 687,
         "commentsTotal": 4,
         "commentsAnswered": 4,
         "shares": 56,
-        "totalInteractions": 755,
-        "plays": 47860
+        "totalInteractions": 799,
+        "plays": 50300
       }
     ],
     "followerCount": 290891,

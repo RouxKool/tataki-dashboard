@@ -8164,5 +8164,69 @@
     ],
     "followerCount": 290891,
     "inProgress": false
+  },
+  {
+    "weekStart": "2026-08-31",
+    "weekEnd": "2026-09-06",
+    "posts": [
+      {
+        "id": "18056643278788099",
+        "permalink": "https://www.instagram.com/p/DctflOQl88L/",
+        "timestamp": "2026-08-31T16:35:02+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Deux Suisses viennent de se faire une place parmi les meilleurs freestylers du monde. 🇨🇭⚽️ Simon M…",
+        "likeCount": 30,
+        "commentsTotal": 1,
+        "commentsAnswered": 0,
+        "shares": 0,
+        "totalInteractions": 34,
+        "plays": null
+      },
+      {
+        "id": "18156010672451816",
+        "permalink": "https://www.instagram.com/p/DctYwNRl6ze/",
+        "timestamp": "2026-08-31T15:15:02+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Roger Federer rejoint officiellement le cercle des légendes du tennis. 🎾 Samedi à Newport, le Suiss…",
+        "likeCount": 370,
+        "commentsTotal": 0,
+        "commentsAnswered": 0,
+        "shares": 0,
+        "totalInteractions": 380,
+        "plays": null
+      },
+      {
+        "id": "18105340073166183",
+        "permalink": "https://www.instagram.com/p/DctR7mSl63U/",
+        "timestamp": "2026-08-31T14:16:14+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Quel son mérite le titre de « single suisse de l’année » 2026 ?🇨🇭🏆 Deuxième catégorie des Awards …",
+        "likeCount": 359,
+        "commentsTotal": 76,
+        "commentsAnswered": 0,
+        "shares": 39,
+        "totalInteractions": 513,
+        "plays": null
+      },
+      {
+        "id": "18327177079279647",
+        "permalink": "https://www.instagram.com/p/DcsyutCl87j/",
+        "timestamp": "2026-08-31T09:43:36+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Tu pourrais courir 6,7 km… toutes les heures pendant 25 heures ? 🏃 Clemquicourt vient d’annoncer « …",
+        "likeCount": 1621,
+        "commentsTotal": 8,
+        "commentsAnswered": 6,
+        "shares": 148,
+        "totalInteractions": 1881,
+        "plays": null
+      }
+    ],
+    "followerCount": 291245,
+    "inProgress": true
   }
 ]

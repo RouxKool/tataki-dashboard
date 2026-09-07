@@ -8494,5 +8494,27 @@
     ],
     "followerCount": 291245,
     "inProgress": false
+  },
+  {
+    "weekStart": "2026-09-07",
+    "weekEnd": "2026-09-13",
+    "posts": [
+      {
+        "id": "18115216420768748",
+        "permalink": "https://www.instagram.com/p/Dc_Ygffl8t6/",
+        "timestamp": "2026-09-07T13:28:49+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Quel projet mérite d’être nommé « Meilleur Projet de l’année » 2026 ? 🏆🇨🇭 Grande nouveauté cette …",
+        "likeCount": 94,
+        "commentsTotal": 28,
+        "commentsAnswered": 0,
+        "shares": 12,
+        "totalInteractions": 139,
+        "plays": null
+      }
+    ],
+    "followerCount": 291604,
+    "inProgress": true
   }
 ]

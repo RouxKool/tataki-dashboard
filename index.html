@@ -78,9 +78,20 @@
     <p class="stat-note">Engagement = likes + commentaires + partages + enregistrements (total_interactions Instagram).</p>
 
     <section class="chart-section">
-      <h2>Évolution du taux de réponse</h2>
-      <div id="chart" class="chart"></div>
-      <div id="chart-tooltip" class="chart-tooltip" hidden></div>
+      <div class="mode-toggle chart-tabs">
+        <button type="button" id="chart-tab-reply" class="mode-btn active" data-chart-target="chart-panel-reply">Taux de réponse</button>
+        <button type="button" id="chart-tab-views" class="mode-btn" data-chart-target="chart-panel-views">Vues Reels</button>
+      </div>
+
+      <div id="chart-panel-reply" class="chart-panel">
+        <div id="chart" class="chart"></div>
+        <div id="chart-tooltip" class="chart-tooltip" hidden></div>
+      </div>
+
+      <div id="chart-panel-views" class="chart-panel" hidden>
+        <div id="chart-views" class="chart"></div>
+        <div id="chart-views-tooltip" class="chart-tooltip" hidden></div>
+      </div>
     </section>
 
     <section class="table-section">

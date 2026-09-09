@@ -18,8 +18,9 @@ consultable en un clic, sans calcul à attendre.
   légende (pour identifier le post sans dépendre d'une image — voir "Limites connues"), likes,
   commentaires, répondus, taux, partages, vues. Affiché par 5, avec un bouton "Afficher plus".
 - Une barre chronologique pour naviguer semaine par semaine, ou basculer en vue mensuelle
-- Un graphique d'évolution du taux de réponse dans le temps, avec un survol affichant le taux
-  et la date exacte de chaque point
+- Deux graphiques d'évolution hebdomadaire, dans des onglets séparés (**Taux de réponse** /
+  **Vues Reels**) : survol pour voir la valeur + la date de chaque point, clic sur un point pour
+  naviguer directement vers cette semaine
 - Tri du tableau "Détail par post" en cliquant sur n'importe quelle colonne (croissant/décroissant)
 - La **semaine en cours** (pas encore terminée) est affichée par défaut, avec un badge
   "en cours" pour signaler que ses chiffres ne sont pas définitifs — voir "Semaine en cours"

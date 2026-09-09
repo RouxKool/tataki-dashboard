@@ -261,6 +261,10 @@ h2 {
   position: relative;
 }
 
+.chart-tabs {
+  margin-bottom: 16px;
+}
+
 .chart {
   width: 100%;
   overflow-x: auto;

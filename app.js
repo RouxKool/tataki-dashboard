@@ -34,7 +34,7 @@ async function init() {
     monthlyPeriods = buildMonthlyPeriods(history);
 
     loadingStatus.hidden = true;
-    renderChart(weeklyPeriods);
+    renderAllCharts(weeklyPeriods);
     setMode("week", { resetToLatest: true });
   } catch (error) {
     loadingStatus.textContent = `Erreur : ${error.message}`;
@@ -57,6 +57,15 @@ document.querySelectorAll("th[data-sort-key]").forEach((th) => {
     sortDirection = sortKey === key && sortDirection === "desc" ? "asc" : "desc";
     sortKey = key;
     renderPostsTableRows();
+  });
+});
+
+document.querySelectorAll(".chart-tabs .mode-btn").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".chart-tabs .mode-btn").forEach((t) => t.classList.remove("active"));
+    document.querySelectorAll(".chart-panel").forEach((panel) => (panel.hidden = true));
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.chartTarget).hidden = false;
   });
 });
 
@@ -309,35 +318,63 @@ function median(values) {
 
 let selectedWeekIndex = null;
 
-function renderChart(periods) {
+const CHARTS = [
+  {
+    chartId: "chart",
+    tooltipId: "chart-tooltip",
+    dotId: "chart-selected-dot",
+    getValue: (p) => p.replyRate,
+    formatTooltip: (v) => formatPercent(v),
+    formatAxis: (v) => `${Math.round(v * 100)}%`,
+    fixedYMax: 1,
+    ariaLabel: (n) => `Évolution du taux de réponse, de 0 à 100%, sur ${n} semaine(s)`,
+  },
+  {
+    chartId: "chart-views",
+    tooltipId: "chart-views-tooltip",
+    dotId: "chart-views-selected-dot",
+    getValue: (p) => p.viewsTotal,
+    formatTooltip: (v) => `${formatNumber(v)} vue(s)`,
+    formatAxis: (v) => formatCompactNumber(v),
+    fixedYMax: null, // calculé à partir des données à chaque rendu
+    ariaLabel: (n) => `Évolution des vues Reels totales sur ${n} semaine(s)`,
+  },
+];
+
+function renderAllCharts(periods) {
+  for (const chart of CHARTS) renderChart(chart, periods);
+}
+
+function renderChart(chart, periods) {
   const points = periods
-    .map((p, i) => ({ x: i, y: p.replyRate, dateLabel: p.dateLabel }))
+    .map((p, i) => ({ x: i, y: chart.getValue(p), dateLabel: p.dateLabel }))
     .filter((p) => p.y != null);
 
-  const chartEl = document.getElementById("chart");
+  const chartEl = document.getElementById(chart.chartId);
   if (points.length < 2) {
     chartEl.innerHTML = "<p class=\"empty-message\">Pas assez de données pour un graphique.</p>";
     return;
   }
-  chartEl.innerHTML = buildLineChartSvg(points, periods.length);
-  attachChartHoverHandlers();
-  if (selectedWeekIndex != null) updateChartSelection(selectedWeekIndex);
+  const yMax = chart.fixedYMax ?? Math.max(...points.map((p) => p.y), 1);
+  chartEl.innerHTML = buildLineChartSvg(chart, points, periods.length, yMax);
+  attachChartHoverHandlers(chart);
+  if (selectedWeekIndex != null) updateSingleChartSelection(chart, selectedWeekIndex);
 }
 
-function attachChartHoverHandlers() {
-  const container = document.getElementById("chart").closest(".chart-section");
+function attachChartHoverHandlers(chart) {
+  const container = document.getElementById(chart.chartId).closest(".chart-panel");
   container.querySelectorAll(".chart-point").forEach((circle) => {
-    circle.addEventListener("mouseenter", () => showChartTooltip(circle));
+    circle.addEventListener("mouseenter", () => showChartTooltip(chart, circle));
     circle.addEventListener("mouseleave", () => {
       const selectedCircle = container.querySelector(`.chart-point[data-period-index="${selectedWeekIndex}"]`);
-      if (selectedCircle) showChartTooltip(selectedCircle);
-      else document.getElementById("chart-tooltip").hidden = true;
+      if (selectedCircle) showChartTooltip(chart, selectedCircle);
+      else document.getElementById(chart.tooltipId).hidden = true;
     });
     circle.addEventListener("click", () => goToWeekFromChart(Number(circle.dataset.periodIndex)));
   });
 }
 
-/** Bascule la timeline sur la semaine cliquée dans le graphique (passe en mode Semaine si besoin). */
+/** Bascule la timeline sur la semaine cliquée dans un graphique (passe en mode Semaine si besoin). */
 function goToWeekFromChart(weekIndex) {
   if (mode !== "week") {
     mode = "week";
@@ -350,29 +387,34 @@ function goToWeekFromChart(weekIndex) {
   renderSelectedPeriod();
 }
 
-function showChartTooltip(circle) {
-  const tooltip = document.getElementById("chart-tooltip");
-  const container = document.getElementById("chart").closest(".chart-section");
+function showChartTooltip(chart, circle) {
+  const tooltip = document.getElementById(chart.tooltipId);
+  const container = document.getElementById(chart.chartId).closest(".chart-panel");
   const circleRect = circle.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
-  tooltip.textContent = `${formatPercent(Number(circle.dataset.rate))} — ${circle.dataset.dateLabel}`;
+  tooltip.textContent = `${chart.formatTooltip(Number(circle.dataset.rawValue))} — ${circle.dataset.dateLabel}`;
   tooltip.style.left = `${circleRect.left - containerRect.left + circleRect.width / 2}px`;
   tooltip.style.top = `${circleRect.top - containerRect.top}px`;
   tooltip.hidden = false;
 }
 
-/** Déplace le gros point permanent sur la semaine actuellement sélectionnée dans la timeline. */
+/** Déplace le gros point permanent sur la semaine actuellement sélectionnée, sur tous les graphiques. */
 function updateChartSelection(weekIndex) {
   selectedWeekIndex = weekIndex;
-  const container = document.getElementById("chart").closest(".chart-section");
+  for (const chart of CHARTS) updateSingleChartSelection(chart, weekIndex);
+}
+
+function updateSingleChartSelection(chart, weekIndex) {
+  const container = document.getElementById(chart.chartId)?.closest(".chart-panel");
   if (!container) return;
 
-  const selectedDot = document.getElementById("chart-selected-dot");
+  const selectedDot = document.getElementById(chart.dotId);
   const matchingCircle = container.querySelector(`.chart-point[data-period-index="${weekIndex}"]`);
 
   if (!matchingCircle) {
     if (selectedDot) selectedDot.style.display = "none";
-    document.getElementById("chart-tooltip").hidden = true;
+    const tooltip = document.getElementById(chart.tooltipId);
+    if (tooltip) tooltip.hidden = true;
     return;
   }
 
@@ -381,10 +423,10 @@ function updateChartSelection(weekIndex) {
     selectedDot.setAttribute("cx", matchingCircle.getAttribute("cx"));
     selectedDot.setAttribute("cy", matchingCircle.getAttribute("cy"));
   }
-  showChartTooltip(matchingCircle);
+  showChartTooltip(chart, matchingCircle);
 }
 
-function buildLineChartSvg(points, totalCount) {
+function buildLineChartSvg(chart, points, totalCount, yMax) {
   const width = 900;
   const height = 220;
   const padding = 30;
@@ -395,7 +437,7 @@ function buildLineChartSvg(points, totalCount) {
   const muted = rootStyle.getPropertyValue("--muted").trim();
 
   const xFor = (i) => padding + (i / Math.max(totalCount - 1, 1)) * (width - padding * 2);
-  const yFor = (v) => height - padding - v * (height - padding * 2);
+  const yFor = (v) => height - padding - (v / yMax) * (height - padding * 2);
 
   const path = points.map((p) => `${xFor(p.x)},${yFor(p.y)}`).join(" ");
   const last = points.at(-1);
@@ -404,26 +446,29 @@ function buildLineChartSvg(points, totalCount) {
   const hitCircles = points
     .map(
       (p) =>
-        `<circle class="chart-point" data-period-index="${p.x}" data-rate="${p.y}" data-date-label="${p.dateLabel}" cx="${xFor(p.x)}" cy="${yFor(p.y)}" r="8" />`
+        `<circle class="chart-point" data-period-index="${p.x}" data-raw-value="${p.y}" data-date-label="${p.dateLabel}" cx="${xFor(p.x)}" cy="${yFor(p.y)}" r="8" />`
     )
     .join("");
 
+  const gradientId = `${chart.chartId}-gradient`;
+  const label = chart.ariaLabel(totalCount);
+
   return `
-    <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Évolution du taux de réponse, de 0 à 100%, sur ${totalCount} semaine(s)">
-      <title>Évolution du taux de réponse sur ${totalCount} semaine(s)</title>
+    <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}">
+      <title>${label}</title>
       <defs>
-        <linearGradient id="chart-area-gradient" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="${gradientId}" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="${highlight}" stop-opacity="0.35" />
           <stop offset="100%" stop-color="${highlight}" stop-opacity="0" />
         </linearGradient>
       </defs>
       <line x1="${padding}" y1="${yFor(0)}" x2="${width - padding}" y2="${yFor(0)}" stroke="${border}" />
-      <line x1="${padding}" y1="${yFor(1)}" x2="${width - padding}" y2="${yFor(1)}" stroke="${border}" />
-      <text x="${padding}" y="${yFor(1) - 6}" fill="${muted}" font-size="11">100%</text>
-      <text x="${padding}" y="${yFor(0) - 6}" fill="${muted}" font-size="11">0%</text>
-      <polygon points="${areaPoints}" fill="url(#chart-area-gradient)" stroke="none" />
+      <line x1="${padding}" y1="${yFor(yMax)}" x2="${width - padding}" y2="${yFor(yMax)}" stroke="${border}" />
+      <text x="${padding}" y="${yFor(yMax) - 6}" fill="${muted}" font-size="11">${chart.formatAxis(yMax)}</text>
+      <text x="${padding}" y="${yFor(0) - 6}" fill="${muted}" font-size="11">${chart.formatAxis(0)}</text>
+      <polygon points="${areaPoints}" fill="url(#${gradientId})" stroke="none" />
       <polyline points="${path}" fill="none" stroke="${highlight}" stroke-width="2" />
-      <circle id="chart-selected-dot" cx="${xFor(last.x)}" cy="${yFor(last.y)}" r="5" fill="${highlight}" style="pointer-events:none" />
+      <circle id="${chart.dotId}" cx="${xFor(last.x)}" cy="${yFor(last.y)}" r="5" fill="${highlight}" style="pointer-events:none" />
       ${hitCircles}
     </svg>
   `;
@@ -444,6 +489,11 @@ function formatPercent(ratio) {
 function formatNumber(value) {
   if (value == null) return "—";
   return value.toLocaleString("fr-CH");
+}
+
+function formatCompactNumber(value) {
+  if (value == null) return "—";
+  return new Intl.NumberFormat("fr-CH", { notation: "compact", maximumFractionDigits: 1 }).format(value);
 }
 
 function formatFollowers(count, previousCount) {

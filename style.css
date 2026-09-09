@@ -261,8 +261,13 @@ h2 {
   position: relative;
 }
 
-.chart-tabs {
+.chart-tabs,
+.views-metric-toggle {
   margin-bottom: 16px;
+}
+
+.chart-panel {
+  position: relative;
 }
 
 .chart {
@@ -287,7 +292,6 @@ h2 {
 
 .chart-tooltip {
   position: absolute;
-  transform: translate(-50%, calc(-100% - 10px));
   background: var(--bg);
   border: 1px solid var(--highlight);
   border-radius: 6px;

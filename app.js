@@ -69,6 +69,16 @@ document.querySelectorAll(".chart-tabs .mode-btn").forEach((tab) => {
   });
 });
 
+document.querySelectorAll(".views-metric-toggle .mode-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    if (btn.dataset.viewsMetric === viewsChartMetric) return;
+    viewsChartMetric = btn.dataset.viewsMetric;
+    document.querySelectorAll(".views-metric-toggle .mode-btn").forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderChart(CHARTS[1], weeklyPeriods);
+  });
+});
+
 function setMode(newMode, { resetToLatest } = {}) {
   mode = newMode;
   modeWeekBtn.classList.toggle("active", mode === "week");
@@ -317,6 +327,7 @@ function median(values) {
 }
 
 let selectedWeekIndex = null;
+let viewsChartMetric = "total"; // "total" ou "average" (vues par Reel)
 
 const CHARTS = [
   {
@@ -333,11 +344,15 @@ const CHARTS = [
     chartId: "chart-views",
     tooltipId: "chart-views-tooltip",
     dotId: "chart-views-selected-dot",
-    getValue: (p) => p.viewsTotal,
-    formatTooltip: (v) => `${formatNumber(v)} vue(s)`,
+    getValue: (p) => (viewsChartMetric === "total" ? p.viewsTotal : p.viewsPerReel),
+    formatTooltip: (v) =>
+      viewsChartMetric === "total" ? `${formatNumber(v)} vue(s)` : `${formatNumber(v)} vue(s) / Reel (moyenne)`,
     formatAxis: (v) => formatCompactNumber(v),
     fixedYMax: null, // calculé à partir des données à chaque rendu
-    ariaLabel: (n) => `Évolution des vues Reels totales sur ${n} semaine(s)`,
+    ariaLabel: (n) =>
+      viewsChartMetric === "total"
+        ? `Évolution des vues Reels totales sur ${n} semaine(s)`
+        : `Évolution des vues moyennes par Reel sur ${n} semaine(s)`,
   },
 ];
 
@@ -387,15 +402,32 @@ function goToWeekFromChart(weekIndex) {
   renderSelectedPeriod();
 }
 
+/**
+ * Positionne le tooltip près du point survolé/sélectionné, sans jamais
+ * déborder du conteneur : bascule sous le point s'il n'y a pas assez de
+ * place au-dessus, et reste dans la largeur du graphique horizontalement.
+ */
 function showChartTooltip(chart, circle) {
   const tooltip = document.getElementById(chart.tooltipId);
   const container = document.getElementById(chart.chartId).closest(".chart-panel");
   const circleRect = circle.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
+  const margin = 8;
+
   tooltip.textContent = `${chart.formatTooltip(Number(circle.dataset.rawValue))} — ${circle.dataset.dateLabel}`;
-  tooltip.style.left = `${circleRect.left - containerRect.left + circleRect.width / 2}px`;
-  tooltip.style.top = `${circleRect.top - containerRect.top}px`;
   tooltip.hidden = false;
+
+  const pointX = circleRect.left - containerRect.left + circleRect.width / 2;
+  const pointY = circleRect.top - containerRect.top;
+  const tooltipWidth = tooltip.offsetWidth;
+  const tooltipHeight = tooltip.offsetHeight;
+
+  const showBelow = pointY - tooltipHeight - margin < 0;
+  tooltip.style.top = showBelow ? `${pointY + margin}px` : `${pointY - tooltipHeight - margin}px`;
+
+  const maxLeft = Math.max(containerRect.width - tooltipWidth - margin, margin);
+  const left = Math.min(Math.max(pointX - tooltipWidth / 2, margin), maxLeft);
+  tooltip.style.left = `${left}px`;
 }
 
 /** Déplace le gros point permanent sur la semaine actuellement sélectionnée, sur tous les graphiques. */

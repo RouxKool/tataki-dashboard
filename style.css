@@ -1,14 +1,19 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
   --bg: #0f0f10;
   --card-bg: #1a1a1c;
   --text: #f2f2f2;
   --muted: #a0a0a5;
   --border: #2c2c2f;
+  --border-hover: #3a3a3e;
   --good: #6bdc8d;
   --bad: #ff6b6b;
-  --highlight: #ffeb00;
+  /* --highlight / --border / --muted sont lus au runtime par buildLineChartSvg()
+     dans app.js pour colorer le SVG du graphique : ne pas renommer. */
+  --highlight: #feeb00;
+  --highlight-hover: #fff23d;
   --highlight-text: #0f0f10; /* dark text on --highlight: 17:1 contrast, well above WCAG AA */
+  --display: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 * {
@@ -33,7 +38,8 @@ body::before {
   background-size: 1400px 1400px;
   opacity: 0.1;
   pointer-events: none;
-  z-index: 0;
+  /* Derrière tout le reste : sinon le grain ternit les aplats jaunes. */
+  z-index: -1;
 }
 
 .page {
@@ -44,9 +50,24 @@ body::before {
   padding: 32px 24px 64px;
 }
 
+.logo {
+  display: block;
+  /* width auto + object-fit : garder le ratio natif du logo */
+  width: auto;
+  height: clamp(44px, 6vw, 64px);
+  object-fit: contain;
+  margin-bottom: 26px;
+  animation: rise 0.5s ease both;
+}
+
 h1 {
-  font-size: 1.6rem;
-  margin: 0 0 4px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.4vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin: 0 0 6px;
 }
 
 .subtitle {
@@ -56,7 +77,10 @@ h1 {
 }
 
 h2 {
-  font-size: 1.05rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
   margin: 0 0 12px;
 }
 
@@ -67,7 +91,7 @@ h2 {
   flex-wrap: wrap;
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 16px 20px;
   margin-bottom: 24px;
 }
@@ -86,8 +110,15 @@ h2 {
   color: var(--muted);
   padding: 6px 14px;
   border-radius: 6px;
+  font-family: inherit;
   font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: color 0.18s ease, background-color 0.18s ease;
+}
+
+.mode-btn:hover:not(.active) {
+  color: var(--text);
 }
 
 .mode-btn.active {
@@ -115,7 +146,14 @@ h2 {
   line-height: 1;
 }
 
-.nav-btn:hover {
+.nav-btn {
+  transition: color 0.18s ease, background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+  color: var(--highlight-text);
+  background: var(--highlight);
   border-color: var(--highlight);
 }
 
@@ -161,7 +199,7 @@ h2 {
 .hero-metric {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 28px 32px 24px;
   margin-bottom: 16px;
 }
@@ -174,8 +212,9 @@ h2 {
 }
 
 .hero-metric-value {
+  font-family: var(--display);
   font-size: clamp(3rem, 8vw, 4.5rem);
-  font-weight: 800;
+  font-weight: 900;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
   line-height: 1.05;
@@ -207,6 +246,7 @@ h2 {
 }
 
 .hero-mini-value {
+  font-family: var(--display);
   font-size: 1.4rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -238,7 +278,7 @@ h2 {
   gap: 4px;
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 20px 8px;
   margin-bottom: 8px;
 }
@@ -249,6 +289,7 @@ h2 {
 }
 
 .stat-value {
+  font-family: var(--display);
   font-size: 1.3rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -270,10 +311,14 @@ h2 {
 .table-section {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 20px;
   margin-bottom: 24px;
   position: relative;
+}
+
+.chart-tooltip {
+  border-radius: 10px;
 }
 
 .chart-tabs,
@@ -384,16 +429,20 @@ td a {
   display: block;
   margin: 16px auto 0;
   background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
+  border: 1px solid var(--highlight);
+  color: var(--highlight);
   padding: 8px 20px;
-  border-radius: 8px;
+  border-radius: 999px;
+  font-family: inherit;
   font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
+  transition: color 0.18s ease, background-color 0.18s ease;
 }
 
 .show-more-btn:hover {
-  border-color: var(--highlight);
+  color: var(--highlight-text);
+  background: var(--highlight);
 }
 
 .loading-status {
@@ -404,7 +453,33 @@ td a {
 
 button:focus-visible,
 input:focus-visible,
-a:focus-visible {
+a:focus-visible,
+th[data-sort-key]:focus-visible {
   outline: 2px solid var(--highlight);
   outline-offset: 2px;
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo {
+    animation: none;
+  }
+
+  .mode-btn,
+  .nav-btn,
+  .show-more-btn {
+    transition: none;
+  }
 }

@@ -46,6 +46,16 @@ modeMonthBtn.addEventListener("click", () => setMode("month", { resetToLatest: t
 timeline.addEventListener("input", () => renderSelectedPeriod());
 prevBtn.addEventListener("click", () => moveTimeline(-1));
 nextBtn.addEventListener("click", () => moveTimeline(1));
+
+// Navigation clavier ← / → : ignorée si le focus est sur un champ (dont le slider lui-même,
+// qui gère déjà nativement ses propres flèches via l'écouteur "input" ci-dessus).
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+  const tag = document.activeElement?.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+  event.preventDefault();
+  moveTimeline(event.key === "ArrowLeft" ? -1 : 1);
+});
 showMoreBtn.addEventListener("click", () => {
   visibleRowCount = currentPeriodPosts.length;
   renderPostsTableRows();
@@ -343,6 +353,7 @@ const CHARTS = [
     chartId: "chart",
     tooltipId: "chart-tooltip",
     dotId: "chart-selected-dot",
+    hoverLabelId: "chart-hover-label",
     getValue: (p) => p.replyRate,
     formatTooltip: (v) => formatPercent(v),
     formatAxis: (v) => `${Math.round(v * 100)}%`,
@@ -353,6 +364,7 @@ const CHARTS = [
     chartId: "chart-views",
     tooltipId: "chart-views-tooltip",
     dotId: "chart-views-selected-dot",
+    hoverLabelId: "chart-views-hover-label",
     getValue: (p) => (viewsChartMetric === "total" ? p.viewsTotal : p.viewsPerReel),
     formatTooltip: (v) =>
       viewsChartMetric === "total" ? `${formatNumber(v)} vue(s)` : `${formatNumber(v)} vue(s) / Reel (moyenne)`,
@@ -371,7 +383,7 @@ function renderAllCharts(periods) {
 
 function renderChart(chart, periods) {
   const points = periods
-    .map((p, i) => ({ x: i, y: chart.getValue(p), dateLabel: p.dateLabel }))
+    .map((p, i) => ({ x: i, y: chart.getValue(p), dateLabel: p.dateLabel, label: p.label }))
     .filter((p) => p.y != null);
 
   const chartEl = document.getElementById(chart.chartId);
@@ -388,11 +400,19 @@ function renderChart(chart, periods) {
 function attachChartHoverHandlers(chart) {
   const container = document.getElementById(chart.chartId).closest(".chart-panel");
   container.querySelectorAll(".chart-point").forEach((circle) => {
-    circle.addEventListener("mouseenter", () => showChartTooltip(chart, circle));
+    circle.addEventListener("mouseenter", () => {
+      updateChartReadout(chart, circle);
+      showHoverLabel(chart, circle);
+    });
     circle.addEventListener("mouseleave", () => {
       const selectedCircle = container.querySelector(`.chart-point[data-period-index="${selectedWeekIndex}"]`);
-      if (selectedCircle) showChartTooltip(chart, selectedCircle);
-      else document.getElementById(chart.tooltipId).hidden = true;
+      if (selectedCircle) {
+        updateChartReadout(chart, selectedCircle);
+        showHoverLabel(chart, selectedCircle);
+      } else {
+        document.getElementById(chart.tooltipId).hidden = true;
+        hideHoverLabel(chart);
+      }
     });
     circle.addEventListener("click", () => goToWeekFromChart(Number(circle.dataset.periodIndex)));
   });
@@ -411,32 +431,25 @@ function goToWeekFromChart(weekIndex) {
   renderSelectedPeriod();
 }
 
-/**
- * Positionne le tooltip près du point survolé/sélectionné, sans jamais
- * déborder du conteneur : bascule sous le point s'il n'y a pas assez de
- * place au-dessus, et reste dans la largeur du graphique horizontalement.
- */
-function showChartTooltip(chart, circle) {
-  const tooltip = document.getElementById(chart.tooltipId);
-  const container = document.getElementById(chart.chartId).closest(".chart-panel");
-  const circleRect = circle.getBoundingClientRect();
-  const containerRect = container.getBoundingClientRect();
-  const margin = 8;
+/** Affiche le résultat du point survolé/sélectionné dans le bandeau fixe sous le graphique. */
+function updateChartReadout(chart, circle) {
+  const readout = document.getElementById(chart.tooltipId);
+  readout.textContent = `${chart.formatTooltip(Number(circle.dataset.rawValue))} — ${circle.dataset.periodLabel}`;
+  readout.hidden = false;
+}
 
-  tooltip.textContent = `${chart.formatTooltip(Number(circle.dataset.rawValue))} — ${circle.dataset.dateLabel}`;
-  tooltip.hidden = false;
+/** Petit résultat (abrégé, sans date) affiché juste au-dessus du point survolé/sélectionné. */
+function showHoverLabel(chart, circle) {
+  const label = document.getElementById(chart.hoverLabelId);
+  if (!label) return;
+  label.setAttribute("x", circle.getAttribute("cx"));
+  label.setAttribute("y", String(Number(circle.getAttribute("cy")) - 20));
+  label.textContent = chart.formatAxis(Number(circle.dataset.rawValue));
+  label.setAttribute("opacity", "1");
+}
 
-  const pointX = circleRect.left - containerRect.left + circleRect.width / 2;
-  const pointY = circleRect.top - containerRect.top;
-  const tooltipWidth = tooltip.offsetWidth;
-  const tooltipHeight = tooltip.offsetHeight;
-
-  const showBelow = pointY - tooltipHeight - margin < 0;
-  tooltip.style.top = showBelow ? `${pointY + margin}px` : `${pointY - tooltipHeight - margin}px`;
-
-  const maxLeft = Math.max(containerRect.width - tooltipWidth - margin, margin);
-  const left = Math.min(Math.max(pointX - tooltipWidth / 2, margin), maxLeft);
-  tooltip.style.left = `${left}px`;
+function hideHoverLabel(chart) {
+  document.getElementById(chart.hoverLabelId)?.setAttribute("opacity", "0");
 }
 
 /** Déplace le gros point permanent sur la semaine actuellement sélectionnée, sur tous les graphiques. */
@@ -456,6 +469,7 @@ function updateSingleChartSelection(chart, weekIndex) {
     if (selectedDot) selectedDot.style.display = "none";
     const tooltip = document.getElementById(chart.tooltipId);
     if (tooltip) tooltip.hidden = true;
+    hideHoverLabel(chart);
     return;
   }
 
@@ -464,13 +478,17 @@ function updateSingleChartSelection(chart, weekIndex) {
     selectedDot.setAttribute("cx", matchingCircle.getAttribute("cx"));
     selectedDot.setAttribute("cy", matchingCircle.getAttribute("cy"));
   }
-  showChartTooltip(chart, matchingCircle);
+  updateChartReadout(chart, matchingCircle);
+  showHoverLabel(chart, matchingCircle);
 }
 
 function buildLineChartSvg(chart, points, totalCount, yMax) {
   const width = 900;
-  const height = 220;
+  const height = 236;
   const padding = 30;
+  // Marge du haut plus grande que les autres côtés : laisse de la place au petit résultat
+  // qui s'affiche au survol/à la sélection au-dessus du point, sans chevaucher le repère d'axe.
+  const paddingTop = 42;
 
   const rootStyle = getComputedStyle(document.documentElement);
   const highlight = rootStyle.getPropertyValue("--highlight").trim();
@@ -478,7 +496,7 @@ function buildLineChartSvg(chart, points, totalCount, yMax) {
   const muted = rootStyle.getPropertyValue("--muted").trim();
 
   const xFor = (i) => padding + (i / Math.max(totalCount - 1, 1)) * (width - padding * 2);
-  const yFor = (v) => height - padding - (v / yMax) * (height - padding * 2);
+  const yFor = (v) => height - padding - (v / yMax) * (height - padding - paddingTop);
 
   const path = points.map((p) => `${xFor(p.x)},${yFor(p.y)}`).join(" ");
   const last = points.at(-1);
@@ -487,7 +505,7 @@ function buildLineChartSvg(chart, points, totalCount, yMax) {
   const hitCircles = points
     .map(
       (p) =>
-        `<circle class="chart-point" data-period-index="${p.x}" data-raw-value="${p.y}" data-date-label="${p.dateLabel}" cx="${xFor(p.x)}" cy="${yFor(p.y)}" r="8" />`
+        `<circle class="chart-point" data-period-index="${p.x}" data-raw-value="${p.y}" data-date-label="${p.dateLabel}" data-period-label="${p.label}" cx="${xFor(p.x)}" cy="${yFor(p.y)}" r="8" />`
     )
     .join("");
 
@@ -505,12 +523,13 @@ function buildLineChartSvg(chart, points, totalCount, yMax) {
       </defs>
       <line x1="${padding}" y1="${yFor(0)}" x2="${width - padding}" y2="${yFor(0)}" stroke="${border}" />
       <line x1="${padding}" y1="${yFor(yMax)}" x2="${width - padding}" y2="${yFor(yMax)}" stroke="${border}" />
-      <text x="${padding}" y="${yFor(yMax) - 6}" fill="${muted}" font-size="11">${chart.formatAxis(yMax)}</text>
+      <text x="${padding}" y="${yFor(yMax) - 4}" fill="${muted}" font-size="11">${chart.formatAxis(yMax)}</text>
       <text x="${padding}" y="${yFor(0) - 6}" fill="${muted}" font-size="11">${chart.formatAxis(0)}</text>
       <polygon points="${areaPoints}" fill="url(#${gradientId})" stroke="none" />
       <polyline points="${path}" fill="none" stroke="${highlight}" stroke-width="2" />
       <circle id="${chart.dotId}" cx="${xFor(last.x)}" cy="${yFor(last.y)}" r="5" fill="${highlight}" style="pointer-events:none" />
       ${hitCircles}
+      <text id="${chart.hoverLabelId}" text-anchor="middle" font-size="12" font-weight="700" fill="${highlight}" style="pointer-events:none" opacity="0"></text>
     </svg>
   `;
 }

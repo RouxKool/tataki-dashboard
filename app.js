@@ -65,7 +65,16 @@ document.querySelectorAll(".chart-tabs .mode-btn").forEach((tab) => {
     document.querySelectorAll(".chart-tabs .mode-btn").forEach((t) => t.classList.remove("active"));
     document.querySelectorAll(".chart-panel").forEach((panel) => (panel.hidden = true));
     tab.classList.add("active");
-    document.getElementById(tab.dataset.chartTarget).hidden = false;
+    const panel = document.getElementById(tab.dataset.chartTarget);
+    panel.hidden = false;
+
+    // Le tooltip du point sélectionné a pu être positionné pendant que ce panneau était
+    // encore caché (getBoundingClientRect renvoie des valeurs nulles sur un élément `hidden`) :
+    // on le repositionne maintenant que le panneau est visible et correctement mesurable.
+    if (selectedWeekIndex != null) {
+      const chart = CHARTS.find((c) => document.getElementById(c.chartId)?.closest(".chart-panel") === panel);
+      if (chart) updateSingleChartSelection(chart, selectedWeekIndex);
+    }
   });
 });
 

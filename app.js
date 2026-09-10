@@ -358,6 +358,7 @@ const CHARTS = [
     formatTooltip: (v) => formatPercent(v),
     formatAxis: (v) => `${Math.round(v * 100)}%`,
     fixedYMax: 1,
+    noDataLabel: "Aucune donnée",
     ariaLabel: (n) => `Évolution du taux de réponse, de 0 à 100%, sur ${n} semaine(s)`,
   },
   {
@@ -370,6 +371,7 @@ const CHARTS = [
       viewsChartMetric === "total" ? `${formatNumber(v)} vue(s)` : `${formatNumber(v)} vue(s) / Reel (moyenne)`,
     formatAxis: (v) => formatCompactNumber(v),
     fixedYMax: null, // calculé à partir des données à chaque rendu
+    noDataLabel: "Pas de Reel publié",
     ariaLabel: (n) =>
       viewsChartMetric === "total"
         ? `Évolution des vues Reels totales sur ${n} semaine(s)`
@@ -382,17 +384,19 @@ function renderAllCharts(periods) {
 }
 
 function renderChart(chart, periods) {
-  const points = periods
-    .map((p, i) => ({ x: i, y: chart.getValue(p), dateLabel: p.dateLabel, label: p.label }))
-    .filter((p) => p.y != null);
+  // Toutes les périodes gardent un repère cliquable/sélectionnable sur le graphique, même
+  // celles sans donnée (ex: une semaine sans Reel) — seule la ligne les ignore, pour éviter
+  // qu'un repère disparaisse complètement quand on navigue jusqu'à cette période.
+  const allPoints = periods.map((p, i) => ({ x: i, y: chart.getValue(p), dateLabel: p.dateLabel, label: p.label }));
+  const linePoints = allPoints.filter((p) => p.y != null);
 
   const chartEl = document.getElementById(chart.chartId);
-  if (points.length < 2) {
+  if (linePoints.length < 2) {
     chartEl.innerHTML = "<p class=\"empty-message\">Pas assez de données pour un graphique.</p>";
     return;
   }
-  const yMax = chart.fixedYMax ?? Math.max(...points.map((p) => p.y), 1);
-  chartEl.innerHTML = buildLineChartSvg(chart, points, periods.length, yMax);
+  const yMax = chart.fixedYMax ?? Math.max(...linePoints.map((p) => p.y), 1);
+  chartEl.innerHTML = buildLineChartSvg(chart, allPoints, linePoints, periods.length, yMax);
   attachChartHoverHandlers(chart);
   if (selectedWeekIndex != null) updateSingleChartSelection(chart, selectedWeekIndex);
 }
@@ -434,7 +438,10 @@ function goToWeekFromChart(weekIndex) {
 /** Affiche le résultat du point survolé/sélectionné dans le bandeau fixe sous le graphique. */
 function updateChartReadout(chart, circle) {
   const readout = document.getElementById(chart.tooltipId);
-  readout.textContent = `${chart.formatTooltip(Number(circle.dataset.rawValue))} — ${circle.dataset.periodLabel}`;
+  readout.textContent =
+    circle.dataset.hasValue === "false"
+      ? `${chart.noDataLabel} — ${circle.dataset.periodLabel}`
+      : `${chart.formatTooltip(Number(circle.dataset.rawValue))} — ${circle.dataset.periodLabel}`;
   readout.hidden = false;
 }
 
@@ -444,7 +451,7 @@ function showHoverLabel(chart, circle) {
   if (!label) return;
   label.setAttribute("x", circle.getAttribute("cx"));
   label.setAttribute("y", String(Number(circle.getAttribute("cy")) - 20));
-  label.textContent = chart.formatAxis(Number(circle.dataset.rawValue));
+  label.textContent = circle.dataset.hasValue === "false" ? "—" : chart.formatAxis(Number(circle.dataset.rawValue));
   label.setAttribute("opacity", "1");
 }
 
@@ -482,7 +489,7 @@ function updateSingleChartSelection(chart, weekIndex) {
   showHoverLabel(chart, matchingCircle);
 }
 
-function buildLineChartSvg(chart, points, totalCount, yMax) {
+function buildLineChartSvg(chart, allPoints, linePoints, totalCount, yMax) {
   const width = 900;
   const height = 236;
   const padding = 30;
@@ -498,17 +505,22 @@ function buildLineChartSvg(chart, points, totalCount, yMax) {
   const xFor = (i) => padding + (i / Math.max(totalCount - 1, 1)) * (width - padding * 2);
   const yFor = (v) => height - padding - (v / yMax) * (height - padding - paddingTop);
 
-  const path = points.map((p) => `${xFor(p.x)},${yFor(p.y)}`).join(" ");
-  const last = points.at(-1);
-  const first = points[0];
-  const areaPoints = `${xFor(first.x)},${yFor(0)} ${path} ${xFor(last.x)},${yFor(0)}`;
-  const hitCircles = points
-    .map(
-      (p) =>
-        `<circle class="chart-point" data-period-index="${p.x}" data-raw-value="${p.y}" data-date-label="${p.dateLabel}" data-period-label="${p.label}" cx="${xFor(p.x)}" cy="${yFor(p.y)}" r="8" />`
-    )
+  const path = linePoints.map((p) => `${xFor(p.x)},${yFor(p.y)}`).join(" ");
+  const first = linePoints[0];
+  const lastWithValue = linePoints.at(-1);
+  const areaPoints = `${xFor(first.x)},${yFor(0)} ${path} ${xFor(lastWithValue.x)},${yFor(0)}`;
+  // Chaque période garde un repère cliquable/sélectionnable, même sans donnée (cy retombe
+  // alors sur la base du graphique) : seule la ligne au-dessus l'ignore.
+  const hitCircles = allPoints
+    .map((p) => {
+      const hasValue = p.y != null;
+      const cy = hasValue ? yFor(p.y) : yFor(0);
+      return `<circle class="chart-point" data-period-index="${p.x}" data-has-value="${hasValue}" data-raw-value="${hasValue ? p.y : 0}" data-date-label="${p.dateLabel}" data-period-label="${p.label}" cx="${xFor(p.x)}" cy="${cy}" r="8" />`;
+    })
     .join("");
 
+  const last = allPoints.at(-1);
+  const lastCy = last.y != null ? yFor(last.y) : yFor(0);
   const gradientId = `${chart.chartId}-gradient`;
   const label = chart.ariaLabel(totalCount);
 
@@ -527,7 +539,7 @@ function buildLineChartSvg(chart, points, totalCount, yMax) {
       <text x="${padding}" y="${yFor(0) - 6}" fill="${muted}" font-size="11">${chart.formatAxis(0)}</text>
       <polygon points="${areaPoints}" fill="url(#${gradientId})" stroke="none" />
       <polyline points="${path}" fill="none" stroke="${highlight}" stroke-width="2" />
-      <circle id="${chart.dotId}" cx="${xFor(last.x)}" cy="${yFor(last.y)}" r="5" fill="${highlight}" style="pointer-events:none" />
+      <circle id="${chart.dotId}" cx="${xFor(last.x)}" cy="${lastCy}" r="5" fill="${highlight}" style="pointer-events:none" />
       ${hitCircles}
       <text id="${chart.hoverLabelId}" text-anchor="middle" font-size="12" font-weight="700" fill="${highlight}" style="pointer-events:none" opacity="0"></text>
     </svg>

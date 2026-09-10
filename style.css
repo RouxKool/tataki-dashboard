@@ -30,7 +30,7 @@ body::before {
   inset: 0;
   background-image: url("assets/bg-texture.png");
   background-repeat: repeat;
-  background-size: 220px 220px;
+  background-size: 1400px 1400px;
   opacity: 0.1;
   pointer-events: none;
   z-index: 0;

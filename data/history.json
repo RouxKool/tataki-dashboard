@@ -8802,17 +8802,31 @@
     "weekEnd": "2026-09-20",
     "posts": [
       {
+        "id": "17946841167336289",
+        "permalink": "https://www.instagram.com/p/DdRVFDmDSnR/",
+        "timestamp": "2026-09-14T14:16:24+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Une pub avec Sydney Sweeney relance le débat sur la sexualisation du sport féminin. 🗣️ Dans la camp…",
+        "likeCount": 2924,
+        "commentsTotal": 40,
+        "commentsAnswered": 9,
+        "shares": 387,
+        "totalInteractions": 3718,
+        "plays": null
+      },
+      {
         "id": "18578303551069305",
         "permalink": "https://www.instagram.com/p/DdRFuCtjTM8/",
         "timestamp": "2026-09-14T12:02:11+0000",
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Claire’s, le magasin de notre enfance, traverse une grosse crise en Suisse. 📉 Depuis plusieurs mois…",
-        "likeCount": 223,
-        "commentsTotal": 3,
-        "commentsAnswered": 0,
-        "shares": 0,
-        "totalInteractions": 244,
+        "likeCount": 862,
+        "commentsTotal": 8,
+        "commentsAnswered": 3,
+        "shares": 89,
+        "totalInteractions": 1031,
         "plays": null
       },
       {
@@ -8822,11 +8836,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Les CD sont en train de redevenir cool. 💿 Après le vinyle, c’est au tour des CD de revenir dans les…",
-        "likeCount": 782,
-        "commentsTotal": 5,
-        "commentsAnswered": 0,
-        "shares": 58,
-        "totalInteractions": 912,
+        "likeCount": 977,
+        "commentsTotal": 8,
+        "commentsAnswered": 4,
+        "shares": 134,
+        "totalInteractions": 1218,
         "plays": null
       }
     ],

@@ -8796,5 +8796,41 @@
     ],
     "followerCount": 291604,
     "inProgress": false
+  },
+  {
+    "weekStart": "2026-09-14",
+    "weekEnd": "2026-09-20",
+    "posts": [
+      {
+        "id": "18578303551069305",
+        "permalink": "https://www.instagram.com/p/DdRFuCtjTM8/",
+        "timestamp": "2026-09-14T12:02:11+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Claire’s, le magasin de notre enfance, traverse une grosse crise en Suisse. 📉 Depuis plusieurs mois…",
+        "likeCount": 223,
+        "commentsTotal": 3,
+        "commentsAnswered": 0,
+        "shares": 0,
+        "totalInteractions": 244,
+        "plays": null
+      },
+      {
+        "id": "18118861133474979",
+        "permalink": "https://www.instagram.com/p/DdJQTZolzOJ/",
+        "timestamp": "2026-09-14T08:59:16+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Les CD sont en train de redevenir cool. 💿 Après le vinyle, c’est au tour des CD de revenir dans les…",
+        "likeCount": 782,
+        "commentsTotal": 5,
+        "commentsAnswered": 0,
+        "shares": 58,
+        "totalInteractions": 912,
+        "plays": null
+      }
+    ],
+    "followerCount": 292147,
+    "inProgress": true
   }
 ]

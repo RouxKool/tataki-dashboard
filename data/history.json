@@ -8802,17 +8802,31 @@
     "weekEnd": "2026-09-20",
     "posts": [
       {
+        "id": "18371093365240362",
+        "permalink": "https://www.instagram.com/p/DdRhHeZlz9e/",
+        "timestamp": "2026-09-14T16:01:36+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Jamais les universités suisses n’avaient accueilli autant d’étudiant.e.s. 🎓 Cette rentrée 2026 conf…",
+        "likeCount": 1521,
+        "commentsTotal": 6,
+        "commentsAnswered": 0,
+        "shares": 174,
+        "totalInteractions": 1780,
+        "plays": null
+      },
+      {
         "id": "17946841167336289",
         "permalink": "https://www.instagram.com/p/DdRVFDmDSnR/",
         "timestamp": "2026-09-14T14:16:24+0000",
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Une pub avec Sydney Sweeney relance le débat sur la sexualisation du sport féminin. 🗣️ Dans la camp…",
-        "likeCount": 2924,
-        "commentsTotal": 40,
+        "likeCount": 5089,
+        "commentsTotal": 65,
         "commentsAnswered": 9,
-        "shares": 387,
-        "totalInteractions": 3718,
+        "shares": 630,
+        "totalInteractions": 6407,
         "plays": null
       },
       {
@@ -8822,11 +8836,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Claire’s, le magasin de notre enfance, traverse une grosse crise en Suisse. 📉 Depuis plusieurs mois…",
-        "likeCount": 862,
-        "commentsTotal": 8,
+        "likeCount": 1135,
+        "commentsTotal": 10,
         "commentsAnswered": 3,
-        "shares": 89,
-        "totalInteractions": 1031,
+        "shares": 106,
+        "totalInteractions": 1362,
         "plays": null
       },
       {
@@ -8836,11 +8850,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Les CD sont en train de redevenir cool. 💿 Après le vinyle, c’est au tour des CD de revenir dans les…",
-        "likeCount": 977,
-        "commentsTotal": 8,
+        "likeCount": 1178,
+        "commentsTotal": 10,
         "commentsAnswered": 4,
-        "shares": 134,
-        "totalInteractions": 1218,
+        "shares": 184,
+        "totalInteractions": 1506,
         "plays": null
       }
     ],

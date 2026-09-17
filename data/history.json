@@ -8802,17 +8802,31 @@
     "weekEnd": "2026-09-20",
     "posts": [
       {
+        "id": "18106579949271530",
+        "permalink": "https://www.instagram.com/p/DdZPW35F3SN/",
+        "timestamp": "2026-09-17T16:00:20+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Les affiches générées par IA commencent à sérieusement agacer. 👀🎨 Menus de restos, flyers d’événem…",
+        "likeCount": 2849,
+        "commentsTotal": 26,
+        "commentsAnswered": 0,
+        "shares": 181,
+        "totalInteractions": 3356,
+        "plays": null
+      },
+      {
         "id": "18105456071074881",
         "permalink": "https://www.instagram.com/p/DdZD71fF8SA/",
         "timestamp": "2026-09-17T13:59:19+0000",
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "T’as vu ce qui se passe autour de Macklemore depuis son éviction de la tournée d’Ed Sheeran ? 🎤 Dep…",
-        "likeCount": 137,
-        "commentsTotal": 1,
+        "likeCount": 1309,
+        "commentsTotal": 13,
         "commentsAnswered": 0,
-        "shares": 0,
-        "totalInteractions": 148,
+        "shares": 28,
+        "totalInteractions": 1495,
         "plays": null
       },
       {
@@ -8822,11 +8836,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "🇨🇭 Aujourd’hui, la musique suisse prend le contrôle des antennes de la SSR. 🎶 À l’occasion de la …",
-        "likeCount": 975,
-        "commentsTotal": 16,
-        "commentsAnswered": 0,
-        "shares": 54,
-        "totalInteractions": 1108,
+        "likeCount": 1262,
+        "commentsTotal": 21,
+        "commentsAnswered": 4,
+        "shares": 63,
+        "totalInteractions": 1435,
         "plays": null
       },
       {
@@ -8836,11 +8850,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Dix ans après « Dans la légende », PNL fait toujours autant parler. 🎧 En 2016, les deux frères impo…",
-        "likeCount": 2944,
-        "commentsTotal": 12,
+        "likeCount": 3079,
+        "commentsTotal": 14,
         "commentsAnswered": 11,
-        "shares": 374,
-        "totalInteractions": 3606,
+        "shares": 386,
+        "totalInteractions": 3769,
         "plays": null
       },
       {
@@ -8850,12 +8864,12 @@
         "mediaType": "VIDEO",
         "mediaProductType": "REELS",
         "captionPreview": "Tu imaginais que la douleur faisait autant partie du quotidien des danseur.euse.s ? 🩰 Derrière les …",
-        "likeCount": 1057,
+        "likeCount": 1177,
         "commentsTotal": 0,
         "commentsAnswered": 0,
-        "shares": 95,
-        "totalInteractions": 1373,
-        "plays": 47076
+        "shares": 101,
+        "totalInteractions": 1512,
+        "plays": 51312
       },
       {
         "id": "18121912969929563",
@@ -8864,11 +8878,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Comment une entrepreneuse adulée a-t-elle fini derrière les barreaux ? 🇺🇸 Avec son nouveau documen…",
-        "likeCount": 842,
+        "likeCount": 867,
         "commentsTotal": 4,
         "commentsAnswered": 2,
-        "shares": 120,
-        "totalInteractions": 1342,
+        "shares": 122,
+        "totalInteractions": 1382,
         "plays": null
       },
       {
@@ -8878,11 +8892,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Mbappé réagit enfin aux mèmes qui le comparent à un dictateur. 👀⚽️ Devenus viraux sur les réseaux, …",
-        "likeCount": 1912,
+        "likeCount": 1965,
         "commentsTotal": 11,
         "commentsAnswered": 4,
         "shares": 97,
-        "totalInteractions": 2150,
+        "totalInteractions": 2204,
         "plays": null
       },
       {
@@ -8892,11 +8906,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Un documentaire applaudi à Venise, mais vivement critiqué en Israël. 🎬 Avec « NAZA », Yuval Abraham…",
-        "likeCount": 7821,
-        "commentsTotal": 30,
+        "likeCount": 8275,
+        "commentsTotal": 31,
         "commentsAnswered": 4,
-        "shares": 443,
-        "totalInteractions": 9289,
+        "shares": 484,
+        "totalInteractions": 9851,
         "plays": null
       },
       {
@@ -8906,11 +8920,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Comment Céline Dion est redevenue l’icône de toute une génération ? 🎤✨ Après six ans d’absence, son…",
-        "likeCount": 1036,
+        "likeCount": 1053,
         "commentsTotal": 5,
         "commentsAnswered": 3,
         "shares": 30,
-        "totalInteractions": 1126,
+        "totalInteractions": 1143,
         "plays": null
       },
       {
@@ -8920,11 +8934,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Les YouTubeur.euse.s ont-ils leur place au cinéma ? 👀🎬 Henry Tran vient d’annoncer « CHAI », un do…",
-        "likeCount": 3929,
+        "likeCount": 3955,
         "commentsTotal": 47,
         "commentsAnswered": 8,
-        "shares": 354,
-        "totalInteractions": 4867,
+        "shares": 361,
+        "totalInteractions": 4902,
         "plays": null
       },
       {
@@ -8934,11 +8948,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "À l’UNIL, la précarité étudiante touche parfois des besoins essentiels. Une enquête menée auprès de …",
-        "likeCount": 1932,
+        "likeCount": 1964,
         "commentsTotal": 8,
         "commentsAnswered": 0,
         "shares": 143,
-        "totalInteractions": 2274,
+        "totalInteractions": 2308,
         "plays": null
       },
       {
@@ -8948,11 +8962,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "900 heures pour transformer son projet de diplôme en série. 🎬 À 19 ans, Noah Dohet aurait pu simple…",
-        "likeCount": 2244,
+        "likeCount": 2271,
         "commentsTotal": 20,
         "commentsAnswered": 8,
         "shares": 159,
-        "totalInteractions": 2791,
+        "totalInteractions": 2822,
         "plays": null
       },
       {
@@ -8962,11 +8976,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Prendre position peut aussi avoir un prix pour les artistes. 🎤 Après avoir affiché son soutien à la…",
-        "likeCount": 7317,
+        "likeCount": 7340,
         "commentsTotal": 40,
         "commentsAnswered": 1,
-        "shares": 594,
-        "totalInteractions": 8518,
+        "shares": 595,
+        "totalInteractions": 8544,
         "plays": null
       },
       {
@@ -8976,11 +8990,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Jamais les universités suisses n’avaient accueilli autant d’étudiant.e.s. 🎓 Cette rentrée 2026 conf…",
-        "likeCount": 3237,
+        "likeCount": 3253,
         "commentsTotal": 9,
         "commentsAnswered": 0,
-        "shares": 409,
-        "totalInteractions": 3826,
+        "shares": 412,
+        "totalInteractions": 3848,
         "plays": null
       },
       {
@@ -8990,11 +9004,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Une pub avec Sydney Sweeney relance le débat sur la sexualisation du sport féminin. 🗣️ Dans la camp…",
-        "likeCount": 6645,
-        "commentsTotal": 93,
+        "likeCount": 6655,
+        "commentsTotal": 94,
         "commentsAnswered": 9,
         "shares": 898,
-        "totalInteractions": 8509,
+        "totalInteractions": 8519,
         "plays": null
       },
       {
@@ -9004,11 +9018,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Claire’s, le magasin de notre enfance, traverse une grosse crise en Suisse. 📉 Depuis plusieurs mois…",
-        "likeCount": 1813,
+        "likeCount": 1827,
         "commentsTotal": 13,
         "commentsAnswered": 3,
-        "shares": 192,
-        "totalInteractions": 2171,
+        "shares": 193,
+        "totalInteractions": 2188,
         "plays": null
       },
       {
@@ -9018,11 +9032,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Les CD sont en train de redevenir cool. 💿 Après le vinyle, c’est au tour des CD de revenir dans les…",
-        "likeCount": 2026,
-        "commentsTotal": 32,
+        "likeCount": 2063,
+        "commentsTotal": 33,
         "commentsAnswered": 4,
-        "shares": 441,
-        "totalInteractions": 2812,
+        "shares": 454,
+        "totalInteractions": 2868,
         "plays": null
       }
     ],

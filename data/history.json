@@ -9116,7 +9116,22 @@
   {
     "weekStart": "2026-09-21",
     "weekEnd": "2026-09-27",
-    "posts": [],
+    "posts": [
+      {
+        "id": "18408540100094479",
+        "permalink": "https://www.instagram.com/p/DdjXxxBF-pW/",
+        "timestamp": "2026-09-21T14:26:19+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Une loi historique se prépare en Islande. 🐋 Depuis juin 2026, 80 rorquals communs ont été tués dans…",
+        "likeCount": 334,
+        "commentsTotal": 2,
+        "commentsAnswered": 0,
+        "shares": 0,
+        "totalInteractions": 354,
+        "plays": null
+      }
+    ],
     "followerCount": 292797,
     "inProgress": true
   }

@@ -9118,17 +9118,31 @@
     "weekEnd": "2026-09-27",
     "posts": [
       {
+        "id": "18056012693558754",
+        "permalink": "https://www.instagram.com/p/DdltBL1l1wj/",
+        "timestamp": "2026-09-22T12:10:24+0000",
+        "mediaType": "CAROUSEL_ALBUM",
+        "mediaProductType": "FEED",
+        "captionPreview": "Ce dimanche, notre alimentation passe par les urnes. 🌱 Avec l’initiative « Pour une alimentation sû…",
+        "likeCount": 439,
+        "commentsTotal": 12,
+        "commentsAnswered": 4,
+        "shares": 0,
+        "totalInteractions": 498,
+        "plays": null
+      },
+      {
         "id": "18145061962576877",
         "permalink": "https://www.instagram.com/p/DdjiaNyF3rN/",
         "timestamp": "2026-09-21T15:59:13+0000",
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Xhaka avait acheté un faux certificat Covid. 🇨🇭 Le capitaine de la Nati a avoué avoir utilisé un f…",
-        "likeCount": 956,
-        "commentsTotal": 30,
-        "commentsAnswered": 0,
-        "shares": 91,
-        "totalInteractions": 1145,
+        "likeCount": 1549,
+        "commentsTotal": 40,
+        "commentsAnswered": 7,
+        "shares": 153,
+        "totalInteractions": 1844,
         "plays": null
       },
       {
@@ -9138,11 +9152,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "Une loi historique se prépare en Islande. 🐋 Depuis juin 2026, 80 rorquals communs ont été tués dans…",
-        "likeCount": 523,
-        "commentsTotal": 2,
-        "commentsAnswered": 0,
-        "shares": 13,
-        "totalInteractions": 562,
+        "likeCount": 805,
+        "commentsTotal": 3,
+        "commentsAnswered": 2,
+        "shares": 22,
+        "totalInteractions": 864,
         "plays": null
       }
     ],

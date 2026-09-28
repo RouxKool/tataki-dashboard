@@ -9356,11 +9356,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "À Genève, la contraception va devenir gratuite pour toutes et tous. 💊 Avec 58,46 % de oui, le canto…",
-        "likeCount": 517,
-        "commentsTotal": 2,
+        "likeCount": 1252,
+        "commentsTotal": 3,
         "commentsAnswered": 0,
-        "shares": 0,
-        "totalInteractions": 552,
+        "shares": 109,
+        "totalInteractions": 1413,
         "plays": null
       },
       {
@@ -9370,12 +9370,12 @@
         "mediaType": "VIDEO",
         "mediaProductType": "REELS",
         "captionPreview": "Tu savais qu’une langue pouvait disparaître en seulement deux générations ? 🗣️💭 Méedéric, Romain e…",
-        "likeCount": 836,
-        "commentsTotal": 9,
+        "likeCount": 1767,
+        "commentsTotal": 14,
         "commentsAnswered": 6,
-        "shares": 0,
-        "totalInteractions": 988,
-        "plays": 22369
+        "shares": 436,
+        "totalInteractions": 2496,
+        "plays": 40619
       },
       {
         "id": "18136019152633357",
@@ -9384,11 +9384,11 @@
         "mediaType": "CAROUSEL_ALBUM",
         "mediaProductType": "FEED",
         "captionPreview": "La fourrure disparaît peu à peu des podiums, mais les plumes, elles, sont partout. 🪶👗 Derrière cet…",
-        "likeCount": 311,
-        "commentsTotal": 0,
+        "likeCount": 446,
+        "commentsTotal": 1,
         "commentsAnswered": 0,
-        "shares": 7,
-        "totalInteractions": 340,
+        "shares": 14,
+        "totalInteractions": 490,
         "plays": null
       }
     ],
